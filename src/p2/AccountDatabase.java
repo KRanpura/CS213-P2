@@ -1,3 +1,7 @@
+package p2;
+
+import p2.Account;
+
 public class AccountDatabase
 {
     private Account [] accounts; //list of various types of accounts

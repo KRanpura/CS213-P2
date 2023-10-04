@@ -1,3 +1,5 @@
+package p2;
+
 public abstract class Account implements Comparable<Account>
 {
     protected Profile holder;
