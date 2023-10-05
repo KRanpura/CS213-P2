@@ -1,9 +1,16 @@
 package p2;
 
-public class CollegeChecking
+public class CollegeChecking extends Checking
 {
-//    p2.CollegeChecking class, extends the p2.Checking class; includes one instance variable only, and defines the
-//    constants for interest rate and fee.
-      //  private Campus campus; //campus code
+    private Campus campus; //campus code
+    public double monthlyInterest()
+    {
+        return 1.0; //placeholder
+    }
+
+    public double monthlyFee()
+    {
+        return 1.0; //placeholder
+    }
 }
 

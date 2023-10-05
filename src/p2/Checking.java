@@ -2,6 +2,14 @@ package p2;
 
 public class Checking
 {
-//    p2.Checking class, extends the p2.Account class without defining any additional instance variable, but defines the
-//        constants for interest rate and fee.
+    private static final double MONTHLY_FEE_IN_DOLLARS = 12;
+    protected static final double ANNUAL_INTEREST_RATE = 0.010;
+    public double monthlyInterest()
+    {
+        return 1.0; //placeholder
+    }
+    public double monthlyFee()
+    {
+        return 1.0; //placeholder
+    }
 }
