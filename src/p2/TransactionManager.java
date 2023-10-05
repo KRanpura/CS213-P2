@@ -25,18 +25,26 @@ public class TransactionManager
         {
             return;
         }
+        Profile profile = new Profile(firstName, lastName, dob);
         double balance = Double.parseDouble(openBank[4]);
         if (balance<=0)
         {
             System.out.println("Initial deposit cannot be 0 or negative.");
             return;
         }
+        //MM accounts need at least $2000 to open
         if(Objects.equals(accountType, "MM") && balance <2000)
         {
             System.out.println("Minimum of $2000 to open a Money Market account.");
             return;
         }
-
+        if(Objects.equals(accountType, "CC"))
+        {
+            if(Integer.parseInt(openBank[5])!=0 || Integer.parseInt(openBank[5])!=1 || Integer.parseInt(openBank[5])!=2)
+            {
+                System.out.println("Invalid campus code.\n");
+            }
+        }
     }
     private boolean validDOB(Date eventDate)
     {
