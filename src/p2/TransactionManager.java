@@ -25,6 +25,17 @@ public class TransactionManager
         {
             return;
         }
+        double balance = Double.parseDouble(openBank[4]);
+        if (balance<=0)
+        {
+            System.out.println("Initial deposit cannot be 0 or negative.");
+            return;
+        }
+        if(Objects.equals(accountType, "MM") && balance <2000)
+        {
+            System.out.println("Minimum of $2000 to open a Money Market account.");
+            return;
+        }
 
     }
     private boolean validDOB(Date eventDate)
