@@ -7,18 +7,8 @@ public class Profile implements Comparable<Profile>
     private Date dob;
 
     @Override
-    public int compareTo(Object object)
-    {
-        return 0; //placeholder
-    }
-
-    public static class RunProject2
-    {
-        public static void main(String[] args)
-        {
-            new TransactionManager().run();
-        }
-
+    public int compareTo(Profile o) {
+        return 0;//placeholder
     }
 }
 
