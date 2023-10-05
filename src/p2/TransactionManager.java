@@ -10,7 +10,7 @@ public class TransactionManager
             System.out.println("Missing data for opening an account.");
             return;
         }
-        //all of them require first name, last name, DOB, intial deposit
+        //all of them require first name, last name, DOB, initial deposit
         String accountType = openBank[0]; //C, CC, S, MM
 
         //first name
