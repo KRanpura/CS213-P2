@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class TransactionManager
 {
 
+    //CHECKING IF ACCOUNT EXISTS ALREADY IS NOT IMPLEMENTED NOR MAKING A NEW ACCOUNT (ONLY PASRSING)
     private void openHelper(String[] openBank)
     {
         if (openBank.length < 5) {
@@ -46,6 +47,79 @@ public class TransactionManager
             }
         }
     }
+
+    private  void closeHelper(String [] closeBank)
+    {
+        //C MM Jane Doe 10/1/1995
+        String accountType = closeBank[0];
+        String firstName = closeBank[1];
+        String lastName = closeBank[2];
+        String dateStr = closeBank[3];
+        int month = Integer.parseInt(dateStr.split("/")[0]);
+        int day = Integer.parseInt(dateStr.split("/")[1]);
+        int year = Integer.parseInt(dateStr.split("/")[2]);
+        Date dob = new Date(month, day, year);
+        if (!validDOB(dob))
+        {
+            return;
+        }
+        Profile profile = new Profile(firstName, lastName, dob);
+    }
+
+    private void depositHelper(String[] depositBank)
+    {
+        String accountType = depositBank[0];
+        String firstName = depositBank[1];
+        String lastName = depositBank[2];
+        String dateStr = depositBank[3];
+        int month = Integer.parseInt(dateStr.split("/")[0]);
+        int day = Integer.parseInt(dateStr.split("/")[1]);
+        int year = Integer.parseInt(dateStr.split("/")[2]);
+        Date dob = new Date(month, day, year);
+        if (!validDOB(dob))
+        {
+            return;
+        }
+        Profile profile = new Profile(firstName, lastName, dob);
+        //check if deposit is not String
+        try {
+            double depositAmnt = Double.parseDouble(depositBank[4]);
+            if (depositAmnt <= 0) {
+                System.out.println("Deposit amount cannot be 0 or negative.\n");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid deposit amount. Please enter a valid number for the deposit.\n");
+        }
+
+    }
+    private void withdrawHelper(String[] withdrawBank)
+    {
+        String accountType = withdrawBank[0];
+        String firstName = withdrawBank[1];
+        String lastName = withdrawBank[2];
+        String dateStr = withdrawBank[3];
+        int month = Integer.parseInt(dateStr.split("/")[0]);
+        int day = Integer.parseInt(dateStr.split("/")[1]);
+        int year = Integer.parseInt(dateStr.split("/")[2]);
+        Date dob = new Date(month, day, year);
+        if (!validDOB(dob))
+        {
+            return;
+        }
+        Profile profile = new Profile(firstName, lastName, dob);
+        //check if deposit is not String
+        try {
+            double depositAmnt = Double.parseDouble(withdrawBank[4]);
+            if (depositAmnt <= 0) {
+                System.out.println("Deposit amount cannot be 0 or negative.\n");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid deposit amount. Please enter a valid number for the deposit.\n");
+        }
+
+    }
     private boolean validDOB(Date eventDate)
     {
         Date today = new Date();
@@ -79,6 +153,7 @@ public class TransactionManager
         System.out.println("Task Manager is running.");
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
+        AccountDatabase account = new AccountDatabase();
         while(scanner.hasNextLine() && isRunning) {
             String line = scanner.nextLine().trim(); // Read the entire line
             if (!line.isEmpty()) {
@@ -90,17 +165,20 @@ public class TransactionManager
                         openHelper(bankString.split("\\s+"));
                         break;
                     case "C":
-                        //fill in
+                        closeHelper(bankString.split("\\s+"));
                     case "D":
-                        //fill in
+                        depositHelper(bankString.split("\\s+"));
                     case "W":
-                        //fill in
+                        withdrawHelper(bankString.split("\\s+"));
                     case "P":
-                        //fill in
+                        account.printSorted();
+                        break;
                     case "PI":
-                        //fill
+                        account.printFeesAndInterests();
+                        break;
                     case "UB":
-                        //fill in
+                        account.printUpdatedBalances();
+                        break;
                     case "Q":
                         isRunning= false;
                         break;
