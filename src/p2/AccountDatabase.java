@@ -49,6 +49,8 @@ public class AccountDatabase
             return false;
         }
     }
+
+    //the same profile cannot open more than 1 of the same type of account
     public boolean open(Account account) //add a new account
     {
         if (!contains(account))
@@ -57,7 +59,7 @@ public class AccountDatabase
             {
                 grow();
             }
-            if (account instanceof MoneyMarket && account.balance < 2000)
+            if (account.getClass() == MoneyMarket.class && account.balance < 2000)
             {
                 return false;
             }
@@ -92,6 +94,7 @@ public class AccountDatabase
     }
     public boolean withdraw(Account account) //false if insufficient fund
     {
+
         return false; //placeholder
     }
     public void deposit(Account account)
@@ -109,12 +112,6 @@ public class AccountDatabase
     public void printUpdatedBalances() //apply the interests/fees
     {
 
-    }
-
-    public static void main(String [] args)
-    {
-//            close(account); //1 true case
-//            close(account2); //1 false csae
     }
 
 }
