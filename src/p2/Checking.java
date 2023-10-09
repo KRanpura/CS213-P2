@@ -1,15 +1,29 @@
 package p2;
 
-public class Checking
+public class Checking extends Account
 {
     private static final double MONTHLY_FEE_IN_DOLLARS = 12;
     protected static final double ANNUAL_INTEREST_RATE = 0.010;
+
+
+
+    public Checking (Profile accHolder, double accBalance)
+    {
+        super(accHolder, accBalance);
+    }
     public double monthlyInterest()
     {
         return 1.0; //placeholder
     }
     public double monthlyFee()
     {
-        return 1.0; //placeholder
+        if (this.getClass() == CollegeChecking.class || this.balance > 1000)
+        {
+            return 0.0;
+        }
+        else
+        {
+            return 12.0;
+        }
     }
 }
