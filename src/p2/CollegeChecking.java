@@ -11,12 +11,11 @@ public class CollegeChecking extends Checking
     }
     public double monthlyInterest()
     {
-        return 1.0; //placeholder
+        return super.monthlyInterest();
     }
-
     public double monthlyFee()
     {
-        return 1.0; //placeholder
+        return super.monthlyFee();
     }
 }
 
