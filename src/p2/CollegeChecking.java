@@ -4,7 +4,7 @@ public class CollegeChecking extends Checking
 {
     private Campus campus; //campus code
 
-    public CollegeChecking(Profile accHolder, double accBalance)
+    public CollegeChecking(Profile accHolder, double accBalance, Campus campus)
     {
         super(accHolder, accBalance);
         this.campus = campus;

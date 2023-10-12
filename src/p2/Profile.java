@@ -6,9 +6,9 @@ public class Profile implements Comparable<Profile>
     private String lname;
     private Date dob;
 
-    private static final int DIFF_LNAME = 1;
-    private static final int DIFF_FNAME = 1;
-    private static final int DIFF_DOB = 1;
+    private static final int DIFF_LNAME= 1;
+    private static final int DIFF_FNAME = 2;
+    private static final int DIFF_DOB = 3;
 
     public Profile (String first, String last, Date birthday)
     {

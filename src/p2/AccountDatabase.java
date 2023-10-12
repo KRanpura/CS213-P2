@@ -19,7 +19,7 @@ public class AccountDatabase
         {
             if (this.accounts[i] != null)
             {
-                if (this.accounts[i].equals(account))
+                if (this.accounts[i].compareTo(account) == 0)
                 {
                     return i;
                 }
@@ -58,10 +58,6 @@ public class AccountDatabase
             if (this.accounts.length == 0) //array has initial capacity 0
             {
                 grow();
-            }
-            if (account.getClass() == MoneyMarket.class && account.balance < 2000)
-            {
-                return false;
             }
             for (int i = 0; i < this.accounts.length; i++)
             {
@@ -127,6 +123,7 @@ public class AccountDatabase
     {
         for (int i = 0; i < accounts.length; i++)
         {
+
         }
     }
     private void checkLoyal(MoneyMarket account)

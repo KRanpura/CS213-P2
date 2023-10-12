@@ -12,8 +12,7 @@ public class Checking extends Account
 
     public double monthlyInterest()
     {
-        return (ANNUAL_INTEREST_RATE / MONTHS);
-        // return (this.balance * (ANNUAL_INTEREST_RATE / MONTHS));
+        return (this.balance * (ANNUAL_INTEREST_RATE / MONTHS));
     }
 
     public double monthlyFee()
@@ -24,7 +23,7 @@ public class Checking extends Account
         }
         else
         {
-            return 12.0;
+            return MONTHLY_FEE_IN_DOLLARS;
         }
     }
 }

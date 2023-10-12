@@ -7,6 +7,9 @@ public abstract class Account implements Comparable<Account>
     protected double balance;
     protected final static int MONTHS = 12;
 
+    private static final int EQUAL = 0;
+    private static final int NOT_EQUAL = 1;
+
     //abstract meaning subclasses implement these methods, not done here in this class
     public abstract double monthlyInterest();
     public abstract double monthlyFee();

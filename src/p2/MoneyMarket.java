@@ -13,7 +13,7 @@ public class MoneyMarket extends Savings
 
     public double monthlyInterest()
     {
-        return (ANNUAL_INTEREST_RATE / MONTHS);
+        return (this.balance * (ANNUAL_INTEREST_RATE / MONTHS));
     }
 
     public double monthlyFee()
@@ -24,6 +24,11 @@ public class MoneyMarket extends Savings
     public int getWithdrawal()
     {
         return this.withdrawal;
+    }
+
+    public void setWithdrawal(int numWithdraw)
+    {
+        this.withdrawal = numWithdraw;
     }
 
 }

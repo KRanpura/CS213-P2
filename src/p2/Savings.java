@@ -17,10 +17,11 @@ public class Savings extends Account
     {
         if (this.isLoyal)
         {
-            return (LOYAL_ANNUAL_INTEREST / MONTHS);
+            return (this.balance * (LOYAL_ANNUAL_INTEREST / MONTHS));
         }
-        return (ANNUAL_INTEREST_RATE / MONTHS); //placeholder
+        return (this.balance * (ANNUAL_INTEREST_RATE / MONTHS)); //placeholder
     }
+
     //return monthly fee
     public double monthlyFee()
     {
