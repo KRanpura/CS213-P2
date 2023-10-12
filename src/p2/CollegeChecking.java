@@ -4,19 +4,18 @@ public class CollegeChecking extends Checking
 {
     private Campus campus; //campus code
 
-    public CollegeChecking(Profile accHolder, double accBalance)
+    public CollegeChecking(Profile accHolder, double accBalance, Campus campus)
     {
         super(accHolder, accBalance);
         this.campus = campus;
     }
     public double monthlyInterest()
     {
-        return 1.0; //placeholder
+        return super.monthlyInterest();
     }
-
     public double monthlyFee()
     {
-        return 1.0; //placeholder
+        return super.monthlyFee();
     }
 }
 

@@ -19,7 +19,7 @@ public class AccountDatabase
         {
             if (this.accounts[i] != null)
             {
-                if (this.accounts[i].equals(account))
+                if (this.accounts[i].compareTo(account) == 0)
                 {
                     return i;
                 }
@@ -59,10 +59,6 @@ public class AccountDatabase
             {
                 grow();
             }
-            if (account.getClass() == MoneyMarket.class && account.balance < 2000)
-            {
-                return false;
-            }
             for (int i = 0; i < this.accounts.length; i++)
             {
                 if (this.accounts[i] == null)
@@ -94,12 +90,21 @@ public class AccountDatabase
     }
     public boolean withdraw(Account account) //false if insufficient fund
     {
-
+        if (account instanceof MoneyMarket)
+        {
+            MoneyMarket acc = (MoneyMarket) account;
+            checkLoyal(acc);
+        }
+        //decrease balance by 10 again here if numWithdrawals > 3
         return false; //placeholder
     }
     public void deposit(Account account)
     {
-
+        if (account instanceof MoneyMarket)
+        {
+            MoneyMarket acc = (MoneyMarket) account;
+            checkLoyal(acc);
+        }
     }
     public void printSorted() //sort by account type and profile
     {
@@ -111,7 +116,26 @@ public class AccountDatabase
     }
     public void printUpdatedBalances() //apply the interests/fees
     {
+        updateBalances();
+    }
 
+    private void updateBalances()
+    {
+        for (int i = 0; i < accounts.length; i++)
+        {
+
+        }
+    }
+    private void checkLoyal(MoneyMarket account)
+    {
+        if (account.getBalance() > 2000)
+        {
+            account.setLoyal(true);
+        }
+        else
+        {
+            account.setLoyal(false);
+        }
     }
 
 }

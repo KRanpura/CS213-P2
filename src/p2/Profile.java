@@ -6,6 +6,10 @@ public class Profile implements Comparable<Profile>
     private String lname;
     private Date dob;
 
+    private static final int DIFF_LNAME= 1;
+    private static final int DIFF_FNAME = 2;
+    private static final int DIFF_DOB = 3;
+
     public Profile (String first, String last, Date birthday)
     {
         this.fname = first;
@@ -46,14 +50,28 @@ public class Profile implements Comparable<Profile>
     @Override
     public int compareTo(Profile profile)
     {
-        if (this.fname.equals(profile.getFname()) && this.lname.equals(profile.getLname()) &&
-                this.dob.equals(profile.getDob()))
+        if (this.lname.equals(profile.getLname()))
         {
-            return 0;
+            if (this.fname.equals(profile.getFname()))
+            {
+                if (this.dob.equals(profile.getDob()))
+                {
+                    return 0;
+                }
+                else
+                {
+                    return DIFF_DOB;
+                }
+            }
+            else
+            {
+                return DIFF_FNAME;
+            }
         }
         else
         {
-            return 1;
+            return DIFF_LNAME; // 1
         }
+
     }
 }

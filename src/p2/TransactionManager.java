@@ -4,6 +4,24 @@ import java.util.Scanner;
 public class TransactionManager
 {
 
+    private Profile makeProfile(String [] toParse)
+    {
+        //String accountType = toParse[0];
+        String firstName = toParse[1];
+        String lastName = toParse[2];
+        String dateStr = toParse[3];
+        int month = Integer.parseInt(dateStr.split("/")[0]);
+        int day = Integer.parseInt(dateStr.split("/")[1]);
+        int year = Integer.parseInt(dateStr.split("/")[2]);
+        Date dob = new Date(month, day, year);
+        if (!validDOB(dob))
+        {
+            return null;
+        }
+        Profile profile = new Profile(firstName, lastName, dob);
+        return profile;
+    }
+
     //CHECKING IF ACCOUNT EXISTS ALREADY IS NOT IMPLEMENTED NOR MAKING A NEW ACCOUNT (ONLY PASRSING)
     private void openHelper(String[] openBank)
     {
@@ -13,21 +31,12 @@ public class TransactionManager
         }
         //all of them require first name, last name, DOB, initial deposit
         String accountType = openBank[0]; //C, CC, S, MM
-
-        //first name
-        String firstName = openBank[1];
-        String lastName = openBank[2];
-        String dateStr = openBank[3];
-        int month = Integer.parseInt(dateStr.split("/")[0]);
-        int day = Integer.parseInt(dateStr.split("/")[1]);
-        int year = Integer.parseInt(dateStr.split("/")[2]);
-        Date dob = new Date(month, day, year);
-        if (!validDOB(dob))
+        double balance = Double.parseDouble(openBank[4]);
+        Profile profile = makeProfile(openBank); //pass to helper function
+        if (profile == null)
         {
             return;
         }
-        Profile profile = new Profile(firstName, lastName, dob);
-        double balance = Double.parseDouble(openBank[4]);
         if (balance<=0)
         {
             System.out.println("Initial deposit cannot be 0 or negative.");
@@ -41,73 +50,55 @@ public class TransactionManager
         }
         if(Objects.equals(accountType, "CC"))
         {
-            if(Integer.parseInt(openBank[5])!=0 || Integer.parseInt(openBank[5])!=1 || Integer.parseInt(openBank[5])!=2)
+            if(Integer.parseInt(openBank[5])!=0 || Integer.parseInt(openBank[5])!=1 ||
+                    Integer.parseInt(openBank[5])!=2)
             {
-                System.out.println("Invalid campus code.\n");
+                System.out.println("Invalid campus code.");
+                return;
             }
         }
+        Account account = makeAccount(profile, balance, accountType);
     }
 
-    private  void closeHelper(String [] closeBank)
+    private void closeHelper(String [] closeBank)
     {
         //C MM Jane Doe 10/1/1995
         String accountType = closeBank[0];
-        String firstName = closeBank[1];
-        String lastName = closeBank[2];
-        String dateStr = closeBank[3];
-        int month = Integer.parseInt(dateStr.split("/")[0]);
-        int day = Integer.parseInt(dateStr.split("/")[1]);
-        int year = Integer.parseInt(dateStr.split("/")[2]);
-        Date dob = new Date(month, day, year);
-        if (!validDOB(dob))
+        Profile profile = makeProfile(closeBank);
+        if (profile == null)
         {
             return;
         }
-        Profile profile = new Profile(firstName, lastName, dob);
     }
 
     private void depositHelper(String[] depositBank)
     {
         String accountType = depositBank[0];
-        String firstName = depositBank[1];
-        String lastName = depositBank[2];
-        String dateStr = depositBank[3];
-        int month = Integer.parseInt(dateStr.split("/")[0]);
-        int day = Integer.parseInt(dateStr.split("/")[1]);
-        int year = Integer.parseInt(dateStr.split("/")[2]);
-        Date dob = new Date(month, day, year);
-        if (!validDOB(dob))
+        Profile profile = makeProfile(depositBank);
+        if (profile == null)
         {
             return;
         }
-        Profile profile = new Profile(firstName, lastName, dob);
         //check if deposit is not String
         try {
-            double depositAmnt = Double.parseDouble(depositBank[4]);
-            if (depositAmnt <= 0) {
+            double depositAmt = Double.parseDouble(depositBank[4]);
+            if (depositAmt <= 0) {
                 System.out.println("Deposit amount cannot be 0 or negative.\n");
                 return;
             }
+            makeAccount(profile, depositAmt, accountType);
         } catch (NumberFormatException e) {
             System.out.println("Invalid deposit amount. Please enter a valid number for the deposit.\n");
         }
-
     }
     private void withdrawHelper(String[] withdrawBank)
     {
         String accountType = withdrawBank[0];
-        String firstName = withdrawBank[1];
-        String lastName = withdrawBank[2];
-        String dateStr = withdrawBank[3];
-        int month = Integer.parseInt(dateStr.split("/")[0]);
-        int day = Integer.parseInt(dateStr.split("/")[1]);
-        int year = Integer.parseInt(dateStr.split("/")[2]);
-        Date dob = new Date(month, day, year);
-        if (!validDOB(dob))
+        Profile profile = makeProfile(withdrawBank);
+        if (profile == null)
         {
             return;
         }
-        Profile profile = new Profile(firstName, lastName, dob);
         //check if deposit is not String
         try {
             double depositAmnt = Double.parseDouble(withdrawBank[4]);
@@ -120,22 +111,44 @@ public class TransactionManager
         }
 
     }
-    private boolean validDOB(Date eventDate)
+    private boolean validDOB(Date date)
     {
         Date today = new Date();
-        if (!eventDate.isValid())
+        if (!date.isValid())
         {
-            System.out.println(eventDate.toString() + " not a valid calendar date!");
+            System.out.println(date.toString() + " not a valid calendar date!");
             return false;
         }
-        else if (eventDate.compareTo(today) < 0)
+        else if (date.compareTo(today) < 0)
         {
-            System.out.println(eventDate.toString() + " cannot be today or a future day.");
+            System.out.println(date.toString() + " cannot be today or a future day.");
             return false;
         }
         else
         {
             return true;
+        }
+    }
+
+    private Account makeAccount(Profile profile, double balance, String accountType)
+    {
+        switch(accountType)
+        {
+            case "C":
+                Checking checking = new Checking (profile, balance);
+                return checking;
+            case "CC":
+                CollegeChecking collegeChecking = new CollegeChecking(profile, balance, null);
+                return collegeChecking;
+            case "S":
+                Savings savings = new Savings(profile, balance, false);// fix
+                return savings;
+            case "MM":
+                MoneyMarket market = new MoneyMarket(profile, balance, 0);
+                return market;
+            default:
+                System.out.println("Invalid command type!");
+                return null;
         }
     }
     public void run ()
@@ -153,7 +166,7 @@ public class TransactionManager
         System.out.println("Task Manager is running.");
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
-        AccountDatabase account = new AccountDatabase();
+        AccountDatabase database = new AccountDatabase();
         while(scanner.hasNextLine() && isRunning) {
             String line = scanner.nextLine().trim(); // Read the entire line
             if (!line.isEmpty()) {
@@ -171,13 +184,13 @@ public class TransactionManager
                     case "W":
                         withdrawHelper(bankString.split("\\s+"));
                     case "P":
-                        account.printSorted();
+                        database.printSorted();
                         break;
                     case "PI":
-                        account.printFeesAndInterests();
+                        database.printFeesAndInterests();
                         break;
                     case "UB":
-                        account.printUpdatedBalances();
+                        database.printUpdatedBalances();
                         break;
                     case "Q":
                         isRunning= false;
