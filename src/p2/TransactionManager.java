@@ -23,6 +23,8 @@ public class TransactionManager
     }
 
     //CHECKING IF ACCOUNT EXISTS ALREADY IS NOT IMPLEMENTED NOR MAKING A NEW ACCOUNT (ONLY PASRSING)
+    //For all account types, must be age 16 or older to open, for college checking, must be under
+    //age 24 to open --> didnt implement this yet remember to!
     private void openHelper(String[] openBank, AccountDatabase db)
     {
         if (openBank.length < 5) {
@@ -74,7 +76,7 @@ public class TransactionManager
         db.close(account);
     }
 
-    private void depositHelper(String[] depositBank)
+    private void depositHelper(String[] depositBank, AccountDatabase db)
     {
         String accountType = depositBank[0];
         Profile profile = makeProfile(depositBank);
@@ -86,15 +88,16 @@ public class TransactionManager
         try {
             double depositAmt = Double.parseDouble(depositBank[4]);
             if (depositAmt <= 0) {
-                System.out.println("Deposit amount cannot be 0 or negative.\n");
+                System.out.println("Deposit - amount cannot be 0 or negative.\n");
                 return;
             }
-            makeAccount(profile, depositAmt, accountType);
+            Account account = makeAccount(profile, depositAmt, accountType);
+            db.deposit(account);
         } catch (NumberFormatException e) {
-            System.out.println("Invalid deposit amount. Please enter a valid number for the deposit.\n");
+            System.out.println("Not a valid amount.\n");
         }
     }
-    private void withdrawHelper(String[] withdrawBank)
+    private void withdrawHelper(String[] withdrawBank, AccountDatabase db)
     {
         String accountType = withdrawBank[0];
         Profile profile = makeProfile(withdrawBank);
@@ -104,13 +107,15 @@ public class TransactionManager
         }
         //check if deposit is not String
         try {
-            double depositAmnt = Double.parseDouble(withdrawBank[4]);
-            if (depositAmnt <= 0) {
-                System.out.println("Deposit amount cannot be 0 or negative.\n");
+            double withdrawAmt = Double.parseDouble(withdrawBank[4]);
+            if (withdrawAmt <= 0) {
+                System.out.println("Withdraw - amount cannot be 0 or negative.\n");
                 return;
             }
+            Account account = makeAccount(profile, withdrawAmt, accountType);
+            db.withdraw(account);
         } catch (NumberFormatException e) {
-            System.out.println("Invalid deposit amount. Please enter a valid number for the deposit.\n");
+            System.out.println("Not a valid amount.\n");
         }
 
     }
@@ -179,9 +184,9 @@ public class TransactionManager
                     case "C":
                         closeHelper(bankString.split("\\s+"), database);
                     case "D":
-                        depositHelper(bankString.split("\\s+"));
+                        depositHelper(bankString.split("\\s+"), database);
                     case "W":
-                        withdrawHelper(bankString.split("\\s+"));
+                        withdrawHelper(bankString.split("\\s+"), database);
                     case "P":
                         database.printSorted();
                         break;

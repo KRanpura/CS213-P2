@@ -1,6 +1,6 @@
 package p2;
 
-import p2.Account;
+import java.text.DecimalFormat;
 
 public class AccountDatabase
 {
@@ -97,6 +97,18 @@ public class AccountDatabase
     }
     public boolean withdraw(Account account) //false if insufficient fund
     {
+        int accIndex = find(account);
+        if (accIndex == NOT_FOUND)
+        {
+            System.out.println("Withdraw - account not found."); //fix this
+            return false;
+        }
+        double balance = this.accounts[accIndex].getBalance();
+        if (balance < account.getBalance())
+        {
+            System.out.println("");
+        }
+        this.accounts[accIndex].setBalance(balance);
         if (account instanceof MoneyMarket)
         {
             MoneyMarket acc = (MoneyMarket) account;
@@ -139,16 +151,13 @@ public class AccountDatabase
         Account [] databaseToPrint = getSortedDatabase();
         for (int i = 0; i < databaseToPrint.length; i++)
         {
-            System.out.println(databaseToPrint[i].toString() + "::fee $" + databaseToPrint[i].monthlyFee() +
-                    "::monthly interest $" + databaseToPrint[i].monthlyInterest());
+            System.out.println(databaseToPrint[i].toString() + "::fee $" +
+                    databaseToPrint[i].format(databaseToPrint[i].monthlyFee()) +
+                    "::monthly interest $" +
+                    databaseToPrint[i].format(databaseToPrint[i].monthlyInterest()));
         }
     }
 
-    private void formatMoney(double balance)
-    {
-        //kusum if you get time can you do this method to make sure that if the balance is
-        // 4567.9 it prints as 4,567.90?
-    }
     public void printUpdatedBalances() //apply the interests/fees
     {
         if (this.accounts.length == 0)
@@ -204,7 +213,5 @@ public class AccountDatabase
             account.setLoyal(false);
         }
     }
-
-
 
 }

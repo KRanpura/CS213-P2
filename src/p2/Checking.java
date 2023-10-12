@@ -37,6 +37,6 @@ public class Checking extends Account
     {
         return (this.getType() + "::" + this.getHolder().getFname() + " " +
                 this.getHolder().getLname() + " " + this.getHolder().getDob().toString() + " " +
-                "::Balance: $" + this.getBalance());
+                "::Balance: $" + format(this.getBalance()));
     }
 }

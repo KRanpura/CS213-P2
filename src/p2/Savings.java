@@ -80,6 +80,6 @@ public class Savings extends Account
     {
         return (this.getType() + "::" + this.getHolder().getFname() + " " +
                 this.getHolder().getLname() + " " + this.getHolder().getDob().toString() + " " +
-                "::Balance: $" + this.getBalance() + "::" + this.getLoyalString());
+                "::Balance: $" + format(this.getBalance()) + "::" + this.getLoyalString());
     }
 }

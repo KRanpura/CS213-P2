@@ -33,7 +33,7 @@ public class CollegeChecking extends Checking
     {
         return (this.getType() + "::" + this.getHolder().getFname() + " " +
                 this.getHolder().getLname() + " " + this.getHolder().getDob().toString() + " " +
-                "::Balance: $" + this.getBalance() + "::" + this.getCampus());
+                "::Balance: $" + format(this.getBalance()) + "::" + this.getCampus());
     }
 }
 

@@ -1,5 +1,7 @@
 package p2;
 
+import java.text.DecimalFormat;
+
 public abstract class Account implements Comparable<Account>
 {
     //protected means only used by subclasses
@@ -48,5 +50,11 @@ public abstract class Account implements Comparable<Account>
     public void setBalance(double balance)
     {
         this.balance = balance;
+    }
+
+    public String format(double balance)
+    {
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0");
+        return decimalFormat.format(balance);
     }
 }
