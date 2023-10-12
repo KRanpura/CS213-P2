@@ -50,6 +50,10 @@ public class Savings extends Account
 
     }
 
+    public String getType()
+    {
+        return "Savings";
+    }
     public boolean getLoyal()
     {
         return this.isLoyal;
@@ -58,5 +62,13 @@ public class Savings extends Account
     public void setLoyal(boolean status)
     {
         this.isLoyal = status;
+    }
+
+    @Override
+    public String toString()
+    {
+        return (this.getType() + "::" + this.getHolder().getFname() + " " +
+                this.getHolder().getLname() + " " + this.getHolder().getDob().toString() + " " +
+                "::Balance: $" + this.getBalance());
     }
 }

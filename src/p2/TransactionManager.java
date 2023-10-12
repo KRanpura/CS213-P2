@@ -23,7 +23,7 @@ public class TransactionManager
     }
 
     //CHECKING IF ACCOUNT EXISTS ALREADY IS NOT IMPLEMENTED NOR MAKING A NEW ACCOUNT (ONLY PASRSING)
-    private void openHelper(String[] openBank)
+    private void openHelper(String[] openBank, AccountDatabase db)
     {
         if (openBank.length < 5) {
             System.out.println("Missing data for opening an account.");
@@ -58,9 +58,10 @@ public class TransactionManager
             }
         }
         Account account = makeAccount(profile, balance, accountType);
+        db.open(account);
     }
 
-    private void closeHelper(String [] closeBank)
+    private void closeHelper(String [] closeBank, AccountDatabase db)
     {
         //C MM Jane Doe 10/1/1995
         String accountType = closeBank[0];
@@ -69,6 +70,8 @@ public class TransactionManager
         {
             return;
         }
+        Account account = makeAccount(profile, 0, accountType);
+        db.close(account);
     }
 
     private void depositHelper(String[] depositBank)
@@ -157,11 +160,7 @@ public class TransactionManager
 //            terminal and performs all Input/Ouput. This class handles all Java exceptions and invalid data before it
 //            calls the methods in p2.AccountDatabase class to complete the transactions. For example,
 //        InputMismatchException, NumberFormatException, NoSuchElementException, invalid dates of birth,
-//            invalid campus codes, and invalid amounts. Whenever there is an exception or invalid data, display a
-//        message on the terminal. See the Project2ExpectedOutput.txt for the proper messages to display. -2 points
-//        for each exception not caught or invalid data not checked in this class or messages not displayed. You must
-//        include a run() method to process the command lines. You will lose 5 points for not including this method,
-//            or the method exceed 40 lines.
+//            invalid campus codes, and invalid amounts.
 
         System.out.println("Task Manager is running.");
         Scanner scanner = new Scanner(System.in);
@@ -175,10 +174,10 @@ public class TransactionManager
                 String bankString = (commandAndArgs.length > 1) ? commandAndArgs[1] : "";
                 switch (command) {
                     case "O":
-                        openHelper(bankString.split("\\s+"));
+                        openHelper(bankString.split("\\s+"), database);
                         break;
                     case "C":
-                        closeHelper(bankString.split("\\s+"));
+                        closeHelper(bankString.split("\\s+"), database);
                     case "D":
                         depositHelper(bankString.split("\\s+"));
                     case "W":

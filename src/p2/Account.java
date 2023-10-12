@@ -13,6 +13,9 @@ public abstract class Account implements Comparable<Account>
     //abstract meaning subclasses implement these methods, not done here in this class
     public abstract double monthlyInterest();
     public abstract double monthlyFee();
+    public abstract String getType();
+
+    public abstract String toString();
 
     public Account(Profile accHolder, double accBalance)
     {
@@ -41,5 +44,10 @@ public abstract class Account implements Comparable<Account>
     public double getBalance()
     {
         return this.balance;
+    }
+
+    public void setBalance(double balance)
+    {
+        this.balance = balance;
     }
 }

@@ -85,6 +85,13 @@ public class AccountDatabase
         {
             this.accounts[index] = null; // Remove account
             this.numAcct--;
+
+            // Shift events to fill the gap
+            for (int i = index; i < this.accounts.length - 1; i++) {
+                this.accounts[i] = this.accounts[i + 1];
+            }
+            // Set the last spot to null
+            this.accounts[this.accounts.length - 1] = null;
             return true;
         }
     }
@@ -108,24 +115,63 @@ public class AccountDatabase
     }
     public void printSorted() //sort by account type and profile
     {
-
+        if (this.accounts.length == 0)
+        {
+            System.out.print("Account database is empty!");
+            return;
+        }
+        Account [] databaseToPrint = getSortedDatabase();
+        for (int i = 0; i < databaseToPrint.length; i++)
+        {
+            System.out.println(databaseToPrint[i].toString());
+        }
     }
+
     public void printFeesAndInterests() //calculate interests/fees
     {
+        if (this.accounts.length == 0)
+        {
+            System.out.print("Account database is empty!");
+            return;
+        }
+        Account [] databaseToPrint = getSortedDatabase();
 
     }
     public void printUpdatedBalances() //apply the interests/fees
     {
-        updateBalances();
-    }
-
-    private void updateBalances()
-    {
-        for (int i = 0; i < accounts.length; i++)
+        if (this.accounts.length == 0)
         {
-
+            System.out.print("Account database is empty!");
+            return;
         }
     }
+
+    public Account[] getSortedDatabase()
+    {
+        Account[] nonNullAccounts = new Account[numAcct];
+        int nonNullCount = 0;
+        for (Account account : accounts)
+        {
+            if (account != null)
+            {
+                nonNullAccounts[nonNullCount++] = account;
+            }
+        }
+        for (int i = 0; i < nonNullCount - 1; i++)
+        {
+            for (int j = 0; j < nonNullCount - i - 1; j++) {
+                String accountType1 = nonNullAccounts[j].getType();
+                String accountType2 = nonNullAccounts[j + 1].getType();
+                if (accountType1.compareTo(accountType2) > 0) {
+                    Account temp = nonNullAccounts[j];
+                    nonNullAccounts[j] = nonNullAccounts[j + 1];
+                    nonNullAccounts[j + 1] = temp;
+                }
+            }
+        }
+        return nonNullAccounts;
+    }
+
     private void checkLoyal(MoneyMarket account)
     {
         if (account.getBalance() > 2000)
@@ -137,5 +183,7 @@ public class AccountDatabase
             account.setLoyal(false);
         }
     }
+
+
 
 }

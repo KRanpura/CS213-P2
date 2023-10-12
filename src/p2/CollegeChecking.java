@@ -17,5 +17,23 @@ public class CollegeChecking extends Checking
     {
         return super.monthlyFee();
     }
+
+    public Campus getCampus()
+    {
+        return this.campus; //campus is an enum constant
+    }
+
+    public String getType()
+    {
+        return "College Checking";
+    }
+
+    @Override
+    public String toString()
+    {
+        return (this.getType() + "::" + this.getHolder().getFname() + " " +
+                this.getHolder().getLname() + " " + this.getHolder().getDob().toString() + " " +
+                "::Balance: $" + this.getBalance() + "::" + this.getCampus());
+    }
 }
 

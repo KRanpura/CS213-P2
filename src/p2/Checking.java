@@ -26,4 +26,17 @@ public class Checking extends Account
             return MONTHLY_FEE_IN_DOLLARS;
         }
     }
+
+    public String getType()
+    {
+        return "Checking";
+    }
+
+    @Override
+    public String toString()
+    {
+        return (this.getType() + "::" + this.getHolder().getFname() + " " +
+                this.getHolder().getLname() + " " + this.getHolder().getDob().toString() + " " +
+                "::Balance: $" + this.getBalance());
+    }
 }

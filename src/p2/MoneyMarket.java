@@ -31,4 +31,16 @@ public class MoneyMarket extends Savings
         this.withdrawal = numWithdraw;
     }
 
+    public String getType()
+    {
+        return "Money Market::Savings";
+    }
+
+    @Override
+    public String toString()
+    {
+        return (this.getType() + "::" + this.getHolder().getFname() + " " +
+                this.getHolder().getLname() + " " + this.getHolder().getDob().toString() + " " +
+                "::Balance: $" + this.getBalance());
+    }
 }
