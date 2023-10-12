@@ -21,6 +21,16 @@ public class MoneyMarket extends Savings
         return super.monthlyFee();
     }
 
+    public boolean getLoyal()
+    {
+        return this.isLoyal;
+    }
+
+    public void setLoyal(boolean status)
+    {
+        super.setLoyal(status);
+    }
+
     public int getWithdrawal()
     {
         return this.withdrawal;
@@ -41,6 +51,7 @@ public class MoneyMarket extends Savings
     {
         return (this.getType() + "::" + this.getHolder().getFname() + " " +
                 this.getHolder().getLname() + " " + this.getHolder().getDob().toString() + " " +
-                "::Balance: $" + this.getBalance());
+                "::Balance: $" + this.getBalance() + "::" + this.getLoyalString() + "::withdrawal: " +
+                this.withdrawal);
     }
 }

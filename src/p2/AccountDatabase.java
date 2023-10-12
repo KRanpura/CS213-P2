@@ -120,6 +120,7 @@ public class AccountDatabase
             System.out.print("Account database is empty!");
             return;
         }
+        System.out.println("*Accounts sorted by account type and profile.");
         Account [] databaseToPrint = getSortedDatabase();
         for (int i = 0; i < databaseToPrint.length; i++)
         {
@@ -134,8 +135,19 @@ public class AccountDatabase
             System.out.print("Account database is empty!");
             return;
         }
+        System.out.println("*List of accounts with fee and monthly interest.");
         Account [] databaseToPrint = getSortedDatabase();
+        for (int i = 0; i < databaseToPrint.length; i++)
+        {
+            System.out.println(databaseToPrint[i].toString() + "::fee $" + databaseToPrint[i].monthlyFee() +
+                    "::monthly interest $" + databaseToPrint[i].monthlyInterest());
+        }
+    }
 
+    private void formatMoney(double balance)
+    {
+        //kusum if you get time can you do this method to make sure that if the balance is
+        // 4567.9 it prints as 4,567.90?
     }
     public void printUpdatedBalances() //apply the interests/fees
     {
@@ -143,6 +155,15 @@ public class AccountDatabase
         {
             System.out.print("Account database is empty!");
             return;
+        }
+        System.out.println("*list of accounts with fees and interests applied.");
+        Account [] databaseToPrint = getSortedDatabase();
+        for (int i = 0; i < databaseToPrint.length; i++)
+        {
+            double fees = databaseToPrint[i].monthlyFee();
+            double interest = databaseToPrint[i].monthlyInterest();
+            databaseToPrint[i].setBalance(databaseToPrint[i].getBalance() + fees + interest);
+            System.out.println(databaseToPrint[i].toString());
         }
     }
 

@@ -14,7 +14,6 @@ public abstract class Account implements Comparable<Account>
     public abstract double monthlyInterest();
     public abstract double monthlyFee();
     public abstract String getType();
-
     public abstract String toString();
 
     public Account(Profile accHolder, double accBalance)
@@ -28,11 +27,11 @@ public abstract class Account implements Comparable<Account>
     {
         if (this.holder.equals(account.holder))
         {
-            return 0;
+            return EQUAL;
         }
         else
         {
-            return 1;
+            return NOT_EQUAL;
         }
     }
 

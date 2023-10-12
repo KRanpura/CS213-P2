@@ -5,7 +5,7 @@ public class Savings extends Account
     protected boolean isLoyal; //loyal customer status
     protected static final double MONTHLY_FEE_IN_DOLLARS = 25;
 
-    protected static final double LOYAL_ANNUAL_INTEREST = 0.0425;
+    private static final double LOYAL_ANNUAL_INTEREST = 0.0425;
     private static final double ANNUAL_INTEREST_RATE = 0.04;
 
     public Savings(Profile accHolder, double balance, boolean loyalStatus)
@@ -64,11 +64,22 @@ public class Savings extends Account
         this.isLoyal = status;
     }
 
+    protected String getLoyalString()
+    {
+        if (this.isLoyal)
+        {
+            return ("is loyal");
+        }
+        else
+        {
+            return "";
+        }
+    }
     @Override
     public String toString()
     {
         return (this.getType() + "::" + this.getHolder().getFname() + " " +
                 this.getHolder().getLname() + " " + this.getHolder().getDob().toString() + " " +
-                "::Balance: $" + this.getBalance());
+                "::Balance: $" + this.getBalance() + "::" + this.getLoyalString());
     }
 }
