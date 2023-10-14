@@ -54,6 +54,8 @@ public class Savings extends Account
     {
         return "Savings";
     }
+
+    public String getTypeInitial() { return "MM";}
     public boolean getLoyal()
     {
         return this.isLoyal;

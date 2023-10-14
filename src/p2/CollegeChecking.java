@@ -28,6 +28,8 @@ public class CollegeChecking extends Checking
         return "College Checking";
     }
 
+    public String getTypeInitial() { return "CC";}
+
     @Override
     public String toString()
     {

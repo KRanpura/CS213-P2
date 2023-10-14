@@ -8,6 +8,8 @@ public class AccountDatabase
     private int numAcct; //number of accounts in the array
     private static final int NOT_FOUND = -1;
 
+    private static final int MM_MIN_BALANCE = 2000;
+
     public AccountDatabase()
     {
         this.numAcct = 0;
@@ -100,36 +102,52 @@ public class AccountDatabase
         int accIndex = find(account);
         if (accIndex == NOT_FOUND)
         {
-            System.out.println("Withdraw - account not found."); //fix this
             return false;
         }
         double balance = this.accounts[accIndex].getBalance();
         if (balance < account.getBalance())
         {
-            System.out.println("");
+            return false;
         }
         this.accounts[accIndex].setBalance(balance);
         if (account instanceof MoneyMarket)
         {
-            MoneyMarket acc = (MoneyMarket) account;
-            checkLoyal(acc);
+            MoneyMarket acc = (MoneyMarket) this.accounts[accIndex];
+            if (acc.getBalance() < MM_MIN_BALANCE)
+            {
+                acc.setLoyal(false);
+            }
+            acc.setWithdrawal(acc.getWithdrawal() + 1);
+            if (acc.getWithdrawal() > 3)
+            {
+                acc.setBalance(acc.getBalance() - 10);
+            }
+            this.accounts[accIndex] = acc;
         }
-        //decrease balance by 10 again here if numWithdrawals > 3
-        return false; //placeholder
+        return true;
     }
     public void deposit(Account account)
     {
+        int accIndex = find(account);
+        double balance = this.accounts[accIndex].getBalance();
+        balance+= account.getBalance();
+        this.accounts[accIndex].setBalance(balance);
         if (account instanceof MoneyMarket)
         {
-            MoneyMarket acc = (MoneyMarket) account;
-            checkLoyal(acc);
+            MoneyMarket acc = (MoneyMarket) this.accounts[accIndex];
+            if (acc.getBalance() > MM_MIN_BALANCE)
+            {
+                acc.setLoyal(true);
+            }
+            this.accounts[accIndex] = acc;
         }
+        return;
     }
     public void printSorted() //sort by account type and profile
     {
         if (this.accounts.length == 0)
         {
-            System.out.print("Account database is empty!");
+            System.out.println("Account database is empty!");
             return;
         }
         System.out.println("*Accounts sorted by account type and profile.");
@@ -144,7 +162,7 @@ public class AccountDatabase
     {
         if (this.accounts.length == 0)
         {
-            System.out.print("Account database is empty!");
+            System.out.println("Account database is empty!");
             return;
         }
         System.out.println("*List of accounts with fee and monthly interest.");
@@ -162,7 +180,7 @@ public class AccountDatabase
     {
         if (this.accounts.length == 0)
         {
-            System.out.print("Account database is empty!");
+            System.out.println("Account database is empty!");
             return;
         }
         System.out.println("*list of accounts with fees and interests applied.");
@@ -201,17 +219,4 @@ public class AccountDatabase
         }
         return nonNullAccounts;
     }
-
-    private void checkLoyal(MoneyMarket account)
-    {
-        if (account.getBalance() > 2000)
-        {
-            account.setLoyal(true);
-        }
-        else
-        {
-            account.setLoyal(false);
-        }
-    }
-
 }

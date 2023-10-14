@@ -32,6 +32,8 @@ public class Checking extends Account
         return "Checking";
     }
 
+    public String getTypeInitial() { return "C";}
+
     @Override
     public String toString()
     {

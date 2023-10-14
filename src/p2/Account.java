@@ -16,6 +16,7 @@ public abstract class Account implements Comparable<Account>
     public abstract double monthlyInterest();
     public abstract double monthlyFee();
     public abstract String getType();
+    public abstract String getTypeInitial();
     public abstract String toString();
 
     public Account(Profile accHolder, double accBalance)

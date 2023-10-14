@@ -4,6 +4,8 @@ import java.util.Scanner;
 public class TransactionManager
 {
 
+    public static final int MIN_MM_BALANCE = 2000;
+    private static final double DAYS_IN_YEAR  = 365.25;
     private Profile makeProfile(String [] toParse)
     {
         //String accountType = toParse[0];
@@ -22,9 +24,6 @@ public class TransactionManager
         return profile;
     }
 
-    //CHECKING IF ACCOUNT EXISTS ALREADY IS NOT IMPLEMENTED NOR MAKING A NEW ACCOUNT (ONLY PASRSING)
-    //For all account types, must be age 16 or older to open, for college checking, must be under
-    //age 24 to open --> didnt implement this yet remember to!
     private void openHelper(String[] openBank, AccountDatabase db)
     {
         if (openBank.length < 5) {
@@ -33,39 +32,54 @@ public class TransactionManager
         }
         //all of them require first name, last name, DOB, initial deposit
         String accountType = openBank[0]; //C, CC, S, MM
-        double balance = Double.parseDouble(openBank[4]);
-        Profile profile = makeProfile(openBank); //pass to helper function
-        if (profile == null)
-        {
-            return;
-        }
-        if (balance<=0)
-        {
-            System.out.println("Initial deposit cannot be 0 or negative.");
-            return;
-        }
-        //MM accounts need at least $2000 to open
-        if(Objects.equals(accountType, "MM") && balance <2000)
-        {
-            System.out.println("Minimum of $2000 to open a Money Market account.");
-            return;
-        }
-        if(Objects.equals(accountType, "CC"))
-        {
-            if(Integer.parseInt(openBank[5])!=0 || Integer.parseInt(openBank[5])!=1 ||
-                    Integer.parseInt(openBank[5])!=2)
+        try {
+            double balance = Double.parseDouble(openBank[5].trim());
+            if (balance<=0)
             {
-                System.out.println("Invalid campus code.");
+                System.out.println("Initial deposit cannot be 0 or negative.");
                 return;
             }
+            Profile profile = makeProfile(openBank); //pass to helper function
+            if (profile == null)
+            {
+                return;
+            }
+            if(Objects.equals(accountType, "MM") && balance < MIN_MM_BALANCE)
+            {
+                System.out.println("Minimum of $2000 to open a Money Market account.");
+                return;
+            }
+            Date today = new Date();
+            if(Objects.equals(accountType, "MM") && profile.getDob().compareTo(today)/DAYS_IN_YEAR > 24)
+            {
+                System.out.println("DOB invalid: " + profile.getDob().toString() + " over 24.");
+                return;
+            }
+            if(Objects.equals(accountType, "CC"))
+            {
+                if(Integer.parseInt(openBank[5])!=0 || Integer.parseInt(openBank[5])!=1 ||
+                        Integer.parseInt(openBank[5])!=2)
+                {
+                    System.out.println("Invalid campus code.");
+                    return;
+                }
+            }
+            Account account = makeAccount(profile, balance, accountType);
+            db.open(account);
         }
-        Account account = makeAccount(profile, balance, accountType);
-        db.open(account);
+        catch (NumberFormatException e)
+        {
+            System.out.println("Not a valid amount.");
+        }
     }
 
     private void closeHelper(String [] closeBank, AccountDatabase db)
     {
         //C MM Jane Doe 10/1/1995
+        if (closeBank.length < 5) {
+            System.out.println("Missing data for closing an account.");
+            return;
+        }
         String accountType = closeBank[0];
         Profile profile = makeProfile(closeBank);
         if (profile == null)
@@ -73,7 +87,13 @@ public class TransactionManager
             return;
         }
         Account account = makeAccount(profile, 0, accountType);
+        if (!db.contains(account))
+        {
+            System.out.println(printResponse(account) + " is not in the database.");
+            return;
+        }
         db.close(account);
+        System.out.println(printResponse(account)+ " has been closed.");
     }
 
     private void depositHelper(String[] depositBank, AccountDatabase db)
@@ -113,7 +133,18 @@ public class TransactionManager
                 return;
             }
             Account account = makeAccount(profile, withdrawAmt, accountType);
-            db.withdraw(account);
+            if (!db.contains(account))
+            {
+                System.out.println(printResponse(account) + " is not in the database.");
+            }
+            if (db.withdraw(account))
+            {
+                System.out.println(printResponse(account) + " Withdraw - balance updated.");
+            }
+            else
+            {
+                System.out.println(printResponse(account) + " Withdraw - insufficient fund.");
+            }
         } catch (NumberFormatException e) {
             System.out.println("Not a valid amount.\n");
         }
@@ -124,12 +155,17 @@ public class TransactionManager
         Date today = new Date();
         if (!date.isValid())
         {
-            System.out.println(date.toString() + " not a valid calendar date!");
+            System.out.println("DOB invalid: " + date.toString() + " not a valid calendar date!");
             return false;
         }
         else if (date.compareTo(today) < 0)
         {
-            System.out.println(date.toString() + " cannot be today or a future day.");
+            System.out.println("DOB invalid: " + date.toString() + " cannot be today or a future day.");
+            return false;
+        }
+        else if (date.compareTo(today) / DAYS_IN_YEAR < 16)
+        {
+            System.out.println("DOB invalid: " + date.toString() + " under 16.");
             return false;
         }
         else
@@ -152,22 +188,21 @@ public class TransactionManager
                 Savings savings = new Savings(profile, balance, false);// fix
                 return savings;
             case "MM":
-                MoneyMarket market = new MoneyMarket(profile, balance, 0);
+                MoneyMarket market = new MoneyMarket(profile, balance);
                 return market;
             default:
                 System.out.println("Invalid command type!");
                 return null;
         }
     }
+    private String printResponse(Account account)
+    {
+        return (account.getHolder().getFname() + " " + account.getHolder().getLname() + " " +
+                account.getHolder().getDob().toString() + "(" + account.getTypeInitial() + ")");
+    }
     public void run ()
     {
-//        p2.TransactionManager class. This is the user interface class that processes the transactions entered on the
-//            terminal and performs all Input/Ouput. This class handles all Java exceptions and invalid data before it
-//            calls the methods in p2.AccountDatabase class to complete the transactions. For example,
-//        InputMismatchException, NumberFormatException, NoSuchElementException, invalid dates of birth,
-//            invalid campus codes, and invalid amounts.
-
-        System.out.println("Task Manager is running.");
+        System.out.println("Transaction Manager is running.\n");
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
         AccountDatabase database = new AccountDatabase();

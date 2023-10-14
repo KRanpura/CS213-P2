@@ -5,10 +5,10 @@ public class MoneyMarket extends Savings
     private static final double ANNUAL_INTEREST_RATE = 0.0475; //default loyal customer status interest
     private int withdrawal; //number of withdrawals
 
-    public MoneyMarket (Profile accHolder, double balance, int numWithdraw)
+    public MoneyMarket (Profile accHolder, double balance)
     {
         super(accHolder, balance, true);
-        this.withdrawal = numWithdraw;
+        this.withdrawal = 0;
     }
 
     public double monthlyInterest()
@@ -45,6 +45,8 @@ public class MoneyMarket extends Savings
     {
         return "Money Market::Savings";
     }
+
+    public String getTypeInitial() { return "MM";}
 
     @Override
     public String toString()
