@@ -30,10 +30,16 @@ public class TransactionManager
             System.out.println("Missing data for opening an account.");
             return;
         }
+//        for (int i = 0; i< openBank.length; i++)
+//        {
+//            System.out.println(i +":"+ openBank[i]);
+//        }
         //all of them require first name, last name, DOB, initial deposit
         String accountType = openBank[0]; //C, CC, S, MM
+        //System.out.println(openBank[4]);
         try {
-            double balance = Double.parseDouble(openBank[5].trim());
+            double balance = Double.parseDouble(openBank[4].trim());
+            //System.out.println("in here");
             if (balance<=0)
             {
                 System.out.println("Initial deposit cannot be 0 or negative.");
@@ -57,7 +63,7 @@ public class TransactionManager
             }
             if(Objects.equals(accountType, "CC"))
             {
-                if(Integer.parseInt(openBank[5])!=0 || Integer.parseInt(openBank[5])!=1 ||
+                if(Integer.parseInt(openBank[5])!=0 && Integer.parseInt(openBank[5])!=1 &&
                         Integer.parseInt(openBank[5])!=2)
                 {
                     System.out.println("Invalid campus code.");
@@ -212,16 +218,20 @@ public class TransactionManager
                 String[] commandAndArgs = line.split(" ", 2); // Split the line into command and arguments
                 String command = commandAndArgs[0];
                 String bankString = (commandAndArgs.length > 1) ? commandAndArgs[1] : "";
+                bankString = bankString.trim();
                 switch (command) {
                     case "O":
                         openHelper(bankString.split("\\s+"), database);
                         break;
                     case "C":
                         closeHelper(bankString.split("\\s+"), database);
+                        break;
                     case "D":
                         depositHelper(bankString.split("\\s+"), database);
+                        break;
                     case "W":
                         withdrawHelper(bankString.split("\\s+"), database);
+                        break;
                     case "P":
                         database.printSorted();
                         break;
