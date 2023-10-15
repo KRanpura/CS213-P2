@@ -21,7 +21,7 @@ public class AccountDatabase
         {
             if (this.accounts[i] != null)
             {
-                if (this.accounts[i].compareTo(account) == 0)
+                if (this.accounts[i].equals(account))
                 {
                     return i;
                 }

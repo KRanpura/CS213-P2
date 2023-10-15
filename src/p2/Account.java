@@ -8,7 +8,6 @@ public abstract class Account implements Comparable<Account>
     protected Profile holder;
     protected double balance;
     protected final static int MONTHS = 12;
-
     private static final int EQUAL = 0;
     private static final int NOT_EQUAL = 1;
 
@@ -36,6 +35,21 @@ public abstract class Account implements Comparable<Account>
         {
             return NOT_EQUAL;
         }
+    }
+
+    @Override
+    public boolean equals(Object object)
+    {
+        if (object instanceof Account)
+        {
+            Account account = (Account) object;
+            if (this.compareTo(account) == EQUAL)
+            {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
     public Profile getHolder()
