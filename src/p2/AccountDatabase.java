@@ -17,14 +17,9 @@ public class AccountDatabase
     }
     private int find(Account account) //search for an account in the array
     {
-        for (int i = 0; i < this.accounts.length; i++)
-        {
-            if (this.accounts[i] != null)
-            {
-                if (this.accounts[i].equals(account))
-                {
-                    return i;
-                }
+        for (int i = 0; i < this.accounts.length; i++) {
+            if (this.accounts[i] != null && this.accounts[i].equals(account)) {
+                return i;
             }
         }
         return NOT_FOUND;
@@ -57,6 +52,7 @@ public class AccountDatabase
     {
         if (!contains(account))
         {
+            System.out.println("hello");
             if (this.accounts.length == 0) //array has initial capacity 0
             {
                 grow();
@@ -74,6 +70,7 @@ public class AccountDatabase
                 }
             }
         }
+        System.out.println("help");
         return false;
     }
     public boolean close(Account account) //remove the given account
@@ -129,19 +126,21 @@ public class AccountDatabase
     public void deposit(Account account)
     {
         int accIndex = find(account);
-        double balance = this.accounts[accIndex].getBalance();
-        balance+= account.getBalance();
-        this.accounts[accIndex].setBalance(balance);
-        if (account instanceof MoneyMarket)
-        {
-            MoneyMarket acc = (MoneyMarket) this.accounts[accIndex];
-            if (acc.getBalance() > MM_MIN_BALANCE)
-            {
-                acc.setLoyal(true);
-            }
-            this.accounts[accIndex] = acc;
+        double depositAmount = account.getBalance();
+        if (accIndex == NOT_FOUND) {
+            return; // Exit the method to avoid further processing
         }
-        return;
+        double currentBalance = this.accounts[accIndex].getBalance();
+        currentBalance += depositAmount;
+        this.accounts[accIndex].setBalance(currentBalance);
+
+        if (account instanceof MoneyMarket) {
+            MoneyMarket mmAccount = (MoneyMarket) this.accounts[accIndex];
+            if (mmAccount.getBalance() >= MM_MIN_BALANCE) {
+                mmAccount.setLoyal(true);
+            }
+            this.accounts[accIndex] = mmAccount;
+        }
     }
     public void printSorted() //sort by account type and profile
     {

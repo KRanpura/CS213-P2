@@ -25,32 +25,22 @@ public abstract class Account implements Comparable<Account>
     }
 
     @Override
-    public int compareTo(Account account)
-    {
-        if (this.holder.equals(account.holder))
-        {
-            return EQUAL;
-        }
-        else
-        {
-            return NOT_EQUAL;
-        }
+    public int compareTo(Account account) {
+        return this.holder.compareTo(account.holder);
     }
 
     @Override
-    public boolean equals(Object object)
-    {
-        if (object instanceof Account)
-        {
-            Account account = (Account) object;
-            if (this.compareTo(account) == EQUAL)
-            {
-                return true;
-            }
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
-        return false;
+        Account account = (Account) object;
+        return holder != null && holder.compareTo(account.holder) == 0;
     }
+
 
     public Profile getHolder()
     {

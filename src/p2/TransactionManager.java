@@ -71,7 +71,14 @@ public class TransactionManager
                 }
             }
             Account account = makeAccount(profile, balance, accountType);
-            db.open(account);
+            if(db.open(account))
+            {
+              System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+ "("+accountType+") opened." );
+            }
+            else
+            {
+                System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+ "("+accountType+") is already in the database." );
+            }
         }
         catch (NumberFormatException e)
         {
@@ -104,6 +111,7 @@ public class TransactionManager
 
     private void depositHelper(String[] depositBank, AccountDatabase db)
     {
+
         String accountType = depositBank[0];
         Profile profile = makeProfile(depositBank);
         if (profile == null)
