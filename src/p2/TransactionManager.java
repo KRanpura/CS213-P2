@@ -10,9 +10,14 @@ import java.util.Objects;
 import java.util.Scanner;
 public class TransactionManager
 {
-
     public static final int MIN_MM_BALANCE = 2000;
     private static final double DAYS_IN_YEAR  = 365.25;
+
+    /**
+     * Helper method to parse user input to create a new user profile
+     * @param toParse user input to parse
+     * @return profile made
+     */
     private Profile makeProfile(String [] toParse)
     {
         //String accountType = toParse[0];
@@ -31,6 +36,11 @@ public class TransactionManager
         return profile;
     }
 
+    /**
+     * Helper method to parse user input and open a new account
+     * @param openBank user input to parse
+     * @param db database to add input to
+     */
     private void openHelper(String[] openBank, AccountDatabase db)
     {
         if (openBank.length < 5) {
@@ -120,6 +130,11 @@ public class TransactionManager
         }
     }
 
+    /**
+     * Helper method to parse user input to close an account
+     * @param closeBank user input string
+     * @param db database to close account in
+     */
     private void closeHelper(String [] closeBank, AccountDatabase db)
     {
         //C MM Jane Doe 10/1/1995
@@ -143,6 +158,11 @@ public class TransactionManager
         System.out.println(printResponse(account)+ " has been closed.");
     }
 
+    /**
+     * Helper method to parse user input for account to deposit in
+     * @param depositBank user input string
+     * @param db database containing account to deposit in
+     */
     private void depositHelper(String[] depositBank, AccountDatabase db)
     {
         String accountType = depositBank[0];
@@ -164,6 +184,12 @@ public class TransactionManager
             System.out.println("Not a valid amount.\n");
         }
     }
+
+    /**
+     * Helper method to parse user input and withdraw from an account
+     * @param withdrawBank user input string
+     * @param db database containing account to withdraw from
+     */
     private void withdrawHelper(String[] withdrawBank, AccountDatabase db)
     {
         String accountType = withdrawBank[0];
@@ -197,6 +223,12 @@ public class TransactionManager
         }
 
     }
+
+    /**
+     * Helper method to check if a date of birth is valid
+     * @param date date to validate
+     * @return true if valid, else false
+     */
     private boolean validDOB(Date date)
     {
         Date today = new Date();
@@ -221,6 +253,13 @@ public class TransactionManager
         }
     }
 
+    /**
+     * Helper method to make an account
+     * @param profile profile of account holder
+     * @param balance balance of new account
+     * @param accountType type of new account
+     * @return account
+     */
     private Account makeAccount(Profile profile, double balance, String accountType)
     {
         switch(accountType)
@@ -242,11 +281,21 @@ public class TransactionManager
                 return null;
         }
     }
+
+    /**
+     * Helper method to print output after performing database operations
+     * @param account to use for printing output
+     * @return output string
+     */
     private String printResponse(Account account)
     {
         return (account.getHolder().getFname() + " " + account.getHolder().getLname() + " " +
                 account.getHolder().getDob().toString() + "(" + account.getTypeInitial() + ")");
     }
+
+    /**
+     * Runs the program
+     */
     public void run ()
     {
         System.out.println("Transaction Manager is running.\n");

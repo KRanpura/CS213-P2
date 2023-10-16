@@ -12,11 +12,19 @@ public enum Campus
     CAMDEN(2);
     private int campusCode;
 
+    /**
+     * Private constructor to intialize new Campus enum
+     * @param code code of Campus enum
+     */
     private Campus(int code)
     {
         this.campusCode = code;
     }
 
+    /**
+     * Getter method to access campus code of campus enum
+     * @return campusCode
+     */
     public int getCampusCode()
     {
         return this.campusCode;
