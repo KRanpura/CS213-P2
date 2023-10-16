@@ -26,7 +26,7 @@ public class AccountDatabase
     {
         for (int i = 0; i < this.accounts.length; i++)
         {
-            if (this.accounts[i] != null && this.accounts[i].equals(account))
+            if (this.accounts[i] != null || this.accounts[i].equals(account))
             {
                 return i;
             }
@@ -60,6 +60,7 @@ public class AccountDatabase
     //the same profile cannot open more than 1 of the same type of account
     public boolean open(Account account) //add a new account
     {
+        System.out.println(account);
         if (contains(account))
         {
             return false;

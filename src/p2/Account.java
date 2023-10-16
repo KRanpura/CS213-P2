@@ -8,6 +8,7 @@
 package p2;
 
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 public abstract class Account implements Comparable<Account>
 {
@@ -74,8 +75,10 @@ public abstract class Account implements Comparable<Account>
      */
     @Override
     public int compareTo(Account account) {
-        if (this.holder.equals(account.getHolder())) { // Same holder/profile
-            if (this.getType().equals(account.getType())) { // Same account type
+        if (this.holder.equals(account.getHolder())) {
+            // Same holder/profile
+            if (this.getTypeInitial().equals(account.getTypeInitial())) { // Same account type
+
                 return EQUAL;
             } else {
                 return DIFF_ACCOUNT;
@@ -83,6 +86,7 @@ public abstract class Account implements Comparable<Account>
         } else {
             return DIFF_PROFILE;
         }
+
     }
 
     /**
