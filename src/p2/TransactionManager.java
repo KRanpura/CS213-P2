@@ -1,3 +1,10 @@
+/**
+ * TransactionManager.java initializes an instance of
+ * AccountDatabase.java and contains methods to parse user input for
+ * account details before performing account operations on the account database.
+ * @author Kusum Gandham, Khushi Ranpura
+ */
+
 package p2;
 import java.util.Objects;
 import java.util.Scanner;

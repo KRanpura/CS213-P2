@@ -1,3 +1,11 @@
+/**
+ * CollegeChecking.java defines the CollegeChecking subclass of Checking and
+ * implements methods to calculate fees and interest, and to print
+ * account information.
+ * @author Khushi Ranpura
+ */
+
+
 package p2;
 
 public class CollegeChecking extends Checking
@@ -34,8 +42,18 @@ public class CollegeChecking extends Checking
     public String toString()
     {
         return (this.getType() + "::" + this.getHolder().getFname() + " " +
-                this.getHolder().getLname() + " " + this.getHolder().getDob().toString() + " " +
-                "::Balance: $" + format(this.getBalance()) + "::" + this.getCampus());
+                this.getHolder().getLname() + " " + this.getHolder().getDob().toString() +
+                "::Balance: $" + format(this.getBalance()) + "::" + this.getCampus().toString());
+    }
+
+    @Override
+    public int compareTo(Account account) {
+        return super.compareTo(account);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }
 

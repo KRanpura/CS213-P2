@@ -1,3 +1,10 @@
+/**
+ * AccountDatabase.java initializes an array of account types
+ * and implements methods to find, open, close, withdraw from,
+ * and deposit in accounts.
+ * @author Khushi Ranpura, Kusum Gandham
+ */
+
 package p2;
 
 import java.text.DecimalFormat;
@@ -17,8 +24,10 @@ public class AccountDatabase
     }
     private int find(Account account) //search for an account in the array
     {
-        for (int i = 0; i < this.accounts.length; i++) {
-            if (this.accounts[i] != null && this.accounts[i].equals(account)) {
+        for (int i = 0; i < this.accounts.length; i++)
+        {
+            if (this.accounts[i] != null && this.accounts[i].equals(account))
+            {
                 return i;
             }
         }
@@ -52,7 +61,6 @@ public class AccountDatabase
     {
         if (!contains(account))
         {
-            System.out.println("hello");
             if (this.accounts.length == 0) //array has initial capacity 0
             {
                 grow();
@@ -70,7 +78,6 @@ public class AccountDatabase
                 }
             }
         }
-        System.out.println("help");
         return false;
     }
     public boolean close(Account account) //remove the given account

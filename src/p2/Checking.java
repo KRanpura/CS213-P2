@@ -1,3 +1,10 @@
+/**
+ * Checking.java defines the Checking subclass of Account and
+ * implements methods to calculate fees and interest, and to print
+ * account information.
+ * @author Khushi Ranpura
+ */
+
 package p2;
 
 public class Checking extends Account
@@ -40,5 +47,15 @@ public class Checking extends Account
         return (this.getType() + "::" + this.getHolder().getFname() + " " +
                 this.getHolder().getLname() + " " + this.getHolder().getDob().toString() + " " +
                 "::Balance: $" + format(this.getBalance()));
+    }
+
+    @Override
+    public int compareTo(Account account) {
+        return super.compareTo(account);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }

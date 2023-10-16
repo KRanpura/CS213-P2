@@ -1,3 +1,9 @@
+/**
+ * MoneyMarket.java defines the MoneyMarket subclass of Savings and
+ * implements methods to calculate fees and interest, and to print
+ * account information.
+ * @author Khushi Ranpura
+ */
 package p2;
 
 public class MoneyMarket extends Savings
@@ -55,5 +61,15 @@ public class MoneyMarket extends Savings
                 this.getHolder().getLname() + " " + this.getHolder().getDob().toString() + " " +
                 "::Balance: $" + format(this.getBalance()) + "::" + this.getLoyalString() +
                 "::withdrawal: " + this.withdrawal);
+    }
+
+    @Override
+    public int compareTo(Account account) {
+        return super.compareTo(account);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }

@@ -1,3 +1,10 @@
+/**
+ * Savings.java defines the Savings subclass of Account and
+ * implements methods to calculate fees and interest, and to print
+ * account information.
+ * @author Khushi Ranpura
+ */
+
 package p2;
 
 public class Savings extends Account
@@ -7,6 +14,7 @@ public class Savings extends Account
 
     private static final double LOYAL_ANNUAL_INTEREST = 0.0425;
     private static final double ANNUAL_INTEREST_RATE = 0.04;
+
 
     public Savings(Profile accHolder, double balance, boolean loyalStatus)
     {
@@ -83,5 +91,14 @@ public class Savings extends Account
         return (this.getType() + "::" + this.getHolder().getFname() + " " +
                 this.getHolder().getLname() + " " + this.getHolder().getDob().toString() + " " +
                 "::Balance: $" + format(this.getBalance()) + "::" + this.getLoyalString());
+    }
+
+    @Override
+    public int compareTo(Account account) {
+        return super.compareTo(account);
+    }
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }
