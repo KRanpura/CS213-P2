@@ -145,7 +145,6 @@ public class TransactionManager
 
     private void depositHelper(String[] depositBank, AccountDatabase db)
     {
-
         String accountType = depositBank[0];
         Profile profile = makeProfile(depositBank);
         if (profile == null)
@@ -291,7 +290,6 @@ public class TransactionManager
                         System.out.println("Invalid command!");
 
                 }
-
             }
         }
     }
