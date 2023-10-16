@@ -78,6 +78,7 @@ public class TransactionManager
                 }
             }
             Account account = makeAccount(profile, balance, accountType);
+            System.out.println(db.open(account));
             if(db.open(account))
             {
               System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+ "("+accountType+") opened." );

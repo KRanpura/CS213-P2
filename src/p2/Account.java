@@ -80,7 +80,7 @@ public abstract class Account implements Comparable<Account>
             if (this.getClass().isAssignableFrom(account.getClass()) ||
                     account.getClass().isAssignableFrom(this.getClass()))
             {
-                System.out.println("Same holder and same type of account");
+                //System.out.println("Same holder and same type of account");
                 return EQUAL;
             }
             else
@@ -108,7 +108,7 @@ public abstract class Account implements Comparable<Account>
             Account account = (Account) obj;
             if (this.compareTo(account) == EQUAL)
             {
-                System.out.println("WRONG");
+                //System.out.println("WRONG");
                 return true;
             }
             else
