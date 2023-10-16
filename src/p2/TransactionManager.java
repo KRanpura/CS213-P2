@@ -47,50 +47,57 @@ public class TransactionManager
         try {
             double balance = Double.parseDouble(openBank[4].trim());
             //System.out.println("in here");
-            if (balance <= 0) {
+            if (balance<=0)
+            {
                 System.out.println("Initial deposit cannot be 0 or negative.");
                 return;
             }
             Profile profile = makeProfile(openBank); //pass to helper function
-            if (profile == null) {
+            if (profile == null)
+            {
                 return;
             }
-            // System.out.print(" " + profile.getFname() + " " + profile.getLname() + " " + profile.getDob().toString() + "\n");
-            if (Objects.equals(accountType, "MM") && balance < MIN_MM_BALANCE) {
+            if(Objects.equals(accountType, "MM") && balance < MIN_MM_BALANCE)
+            {
                 System.out.println("Minimum of $2000 to open a Money Market account.");
                 return;
             }
             Date today = new Date();
-            if (Objects.equals(accountType, "MM") && profile.getDob().compareTo(today) / DAYS_IN_YEAR > 24) {
+            if(Objects.equals(accountType, "MM") && profile.getDob().compareTo(today)/DAYS_IN_YEAR > 24)
+            {
                 System.out.println("DOB invalid: " + profile.getDob().toString() + " over 24.");
                 return;
-            } else if (Objects.equals(accountType, "MM")) {
+            }
+            else if(Objects.equals(accountType,"MM")) {
                 MoneyMarket moneyMarket = new MoneyMarket(profile, balance);
                 boolean result = db.open(moneyMarket);
-                if (result) {
-                    System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()
-                            + "(" + accountType + ") opened.");
-                } else {
-                    System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()
-                            + "(" + accountType + ") is already in the database.");
+                if (result)
+                {
+                    System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob() + "(" + accountType + ") opened.");
+                }
+                else{
+                    System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob() + "(" + accountType + ") is already in the database.");
                 }
                 return;
-            } else if (Objects.equals(accountType, "CC")) {
-                if (Integer.parseInt(openBank[5]) != 0 && Integer.parseInt(openBank[5]) != 1 &&
-                        Integer.parseInt(openBank[5]) != 2) {
+            }
+            if(Objects.equals(accountType, "CC"))
+            {
+                if(Integer.parseInt(openBank[5])!=0 && Integer.parseInt(openBank[5])!=1 &&
+                        Integer.parseInt(openBank[5])!=2)
+                {
                     System.out.println("Invalid campus code.");
                     return;
-                } else {
+                }
+                else
+                {
                     Campus campus = Campus.values()[Integer.parseInt(openBank[5])]; // Parse the campus code correctly
                     CollegeChecking collegeChecking = new CollegeChecking(profile, balance, campus);
                     //System.out.println(db.open(collegeChecking));
                     boolean result = db.open(collegeChecking);
                     if (result) {
-                        System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob() + "("
-                                + accountType + ") opened.");
+                        System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob() + "(" + accountType + ") opened.");
                     } else {
-                        System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob() + "("
-                                + accountType + ") is already in the database.");
+                        System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob() + "(" + accountType + ") is already in the database.");
                     }
                     return;
                 }
@@ -99,14 +106,12 @@ public class TransactionManager
             boolean result = db.open(account);
             if(result)
             {
-              System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+
-                      "("+accountType+") opened." );
+                System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+ "("+accountType+") opened." );
             }
             else if (!result)
             {
                 System.out.println(db.open(account));
-                System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()
-                        + "("+accountType+") is already in the database." );
+                System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+ "("+accountType+") is already in the database." );
             }
         }
         catch (NumberFormatException e)
@@ -290,6 +295,5 @@ public class TransactionManager
             }
         }
     }
-
 
 }

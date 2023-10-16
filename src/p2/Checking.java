@@ -49,13 +49,13 @@ public class Checking extends Account
                 "::Balance: $" + format(this.getBalance()));
     }
 
-    @Override
-    public int compareTo(Account account) {
-        return super.compareTo(account);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
+//    @Override
+//    public int compareTo(Account account) {
+//        return super.compareTo(account);
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        return super.equals(obj);
+//    }
 }

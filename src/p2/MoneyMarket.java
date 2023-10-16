@@ -63,13 +63,13 @@ public class MoneyMarket extends Savings
                 "::withdrawal: " + this.withdrawal);
     }
 
-    @Override
-    public int compareTo(Account account) {
-        return super.compareTo(account);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
+//    @Override
+//    public int compareTo(Account account) {
+//        return super.compareTo(account);
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        return super.equals(obj);
+//    }
 }
