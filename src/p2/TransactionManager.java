@@ -110,7 +110,7 @@ public class TransactionManager
             }
             else if (!result)
             {
-                System.out.println(db.open(account));
+                //System.out.println(db.open(account) +"hi");
                 System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+ "("+accountType+") is already in the database." );
             }
         }

@@ -8,6 +8,7 @@
 package p2;
 
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 public class AccountDatabase
 {
@@ -24,10 +25,18 @@ public class AccountDatabase
     }
     private int find(Account account) //search for an account in the array
     {
+
         for (int i = 0; i < this.accounts.length; i++)
         {
-            if (this.accounts[i] != null || this.accounts[i].equals(account))
+            if(this.accounts[i] == null)
             {
+                continue;
+            }
+            if (this.accounts[i] != null || Objects.equals(this.accounts[i], account))
+            {
+                System.out.println("account in array: " +this.accounts[i]);
+                System.out.println("account: " +account);
+
                 return i;
             }
         }

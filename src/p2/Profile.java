@@ -64,7 +64,7 @@ public class Profile implements Comparable<Profile>
             {
                 if (this.dob.equals(profile.getDob()))
                 {
-                    return 0;
+                    return SAME_PROFILE;
                 }
                 else
                 {
