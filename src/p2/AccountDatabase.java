@@ -26,7 +26,11 @@ public class AccountDatabase
     {
         for (int i = 0; i < this.accounts.length; i++)
         {
-            if (this.accounts[i] != null || this.accounts[i].equals(account))
+            if (this.accounts[i] == null)
+            {
+                continue;
+            }
+            if (this.accounts[i].equals(account))
             {
                 return i;
             }
@@ -60,17 +64,40 @@ public class AccountDatabase
     //the same profile cannot open more than 1 of the same type of account
     public boolean open(Account account) //add a new account
     {
-        //System.out.println(account);
-        if (contains(account))
+        if (this.accounts.length == 0) //array has initial capacity 0
         {
-            return false;
+            grow();
         }
-        if (!contains(account))
+        //System.out.println(account);
+        if (this.contains(account))
         {
-            if (this.accounts.length == 0) //array has initial capacity 0
+           // System.out.print(find(account));
+            if ((this.accounts[this.find(account)] instanceof Checking) && (account instanceof Checking))
             {
-                grow();
+                return false; //same profile cant have cc and c
             }
+            else if (this.accounts[this.find(account)].getClass().equals(account.getClass()))
+            {
+                return false; //same profile can't have same type of acc
+            }
+            else
+            {
+                for (int i = 0; i < this.accounts.length; i++)
+                {
+                    if (this.accounts[i] == null)
+                    {
+                        this.accounts[i] = account;
+                        this.numAcct++;
+                        if (i == this.accounts.length - 1) {
+                            grow();
+                        }
+                        return true;
+                    }
+                }
+            }
+        }
+        else if (!contains(account))
+        {
             for (int i = 0; i < this.accounts.length; i++)
             {
                 if (this.accounts[i] == null)
@@ -99,7 +126,7 @@ public class AccountDatabase
             this.numAcct--;
 
             // Shift events to fill the gap
-            for (int i = index; i < this.accounts.length - 1; i++) {
+            for (int i = index; i < this.numAcct - 1; i++) {
                 this.accounts[i] = this.accounts[i + 1];
             }
             // Set the last spot to null
