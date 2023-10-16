@@ -77,7 +77,7 @@ public abstract class Account implements Comparable<Account>
     public int compareTo(Account account) {
         if (this.holder.equals(account.getHolder())) {
             // Same holder/profile
-            if (this.getTypeInitial().equals(account.getTypeInitial())) { // Same account type
+            if (this.getType().equals(account.getType())) { // Same account type
 
                 return EQUAL;
             } else {
