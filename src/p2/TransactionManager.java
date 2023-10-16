@@ -68,6 +68,18 @@ public class TransactionManager
                 System.out.println("DOB invalid: " + profile.getDob().toString() + " over 24.");
                 return;
             }
+            else if(Objects.equals(accountType,"MM")) {
+                MoneyMarket moneyMarket = new MoneyMarket(profile, balance);
+                boolean result = db.open(moneyMarket);
+                if (result)
+                {
+                    System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob() + "(" + accountType + ") opened.");
+                }
+                else{
+                    System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob() + "(" + accountType + ") is already in the database.");
+                }
+                return;
+            }
             if(Objects.equals(accountType, "CC"))
             {
                 if(Integer.parseInt(openBank[5])!=0 && Integer.parseInt(openBank[5])!=1 &&
@@ -91,16 +103,16 @@ public class TransactionManager
                 }
             }
             Account account = makeAccount(profile, balance, accountType);
-            System.out.println(db.open(account));
-//            if(db.open(account))
-//            {
-//              System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+ "("+accountType+") opened." );
-//            }
-//            else if (!db.open(account))
-//            {
-//                System.out.println(db.open(account));
-//                System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+ "("+accountType+") is already in the database." );
-//            }
+            boolean result = db.open(account);
+            if(result)
+            {
+              System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+ "("+accountType+") opened." );
+            }
+            else if (!result)
+            {
+                System.out.println(db.open(account));
+                System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+ "("+accountType+") is already in the database." );
+            }
         }
         catch (NumberFormatException e)
         {
@@ -272,6 +284,7 @@ public class TransactionManager
                         database.printUpdatedBalances();
                         break;
                     case "Q":
+                        System.out.println("Transaction Manager is terminated.\n");
                         isRunning= false;
                         break;
                     default:

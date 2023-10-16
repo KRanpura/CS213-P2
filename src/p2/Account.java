@@ -73,23 +73,14 @@ public abstract class Account implements Comparable<Account>
      *         DIFF_PROFILE is different user
      */
     @Override
-    public int compareTo(Account account)
-    {
-        if (this.holder.equals(account.getHolder())) //same holder / profile
-        {
-            if (this.getClass().isAssignableFrom(account.getClass()) ||
-                    account.getClass().isAssignableFrom(this.getClass()))
-            {
-                //System.out.println("Same holder and same type of account");
+    public int compareTo(Account account) {
+        if (this.holder.equals(account.getHolder())) { // Same holder/profile
+            if (this.getType().equals(account.getType())) { // Same account type
                 return EQUAL;
-            }
-            else
-            {
+            } else {
                 return DIFF_ACCOUNT;
             }
-        }
-        else
-        {
+        } else {
             return DIFF_PROFILE;
         }
     }
@@ -101,25 +92,12 @@ public abstract class Account implements Comparable<Account>
      * @return true if accounts are equal, else false
      */
     @Override
-    public boolean equals (Object obj)
-    {
-        if (obj instanceof Account)
-        {
+    public boolean equals(Object obj) {
+        if (obj instanceof Account) {
             Account account = (Account) obj;
-            if (this.compareTo(account) == EQUAL)
-            {
-                //System.out.println("WRONG");
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return this.compareTo(account) == EQUAL;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     /**
