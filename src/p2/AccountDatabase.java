@@ -60,7 +60,7 @@ public class AccountDatabase
     //the same profile cannot open more than 1 of the same type of account
     public boolean open(Account account) //add a new account
     {
-        System.out.println(account);
+        //System.out.println(account);
         if (contains(account))
         {
             return false;
@@ -119,7 +119,9 @@ public class AccountDatabase
         {
             return false;
         }
-        this.accounts[accIndex].setBalance(balance);
+        double newBalance = account.getBalance();
+        double updateBalance = balance - newBalance;
+        this.accounts[accIndex].setBalance(updateBalance);
         if (account instanceof MoneyMarket)
         {
             MoneyMarket acc = (MoneyMarket) this.accounts[accIndex];
