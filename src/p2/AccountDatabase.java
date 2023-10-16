@@ -56,9 +56,14 @@ public class AccountDatabase
         }
     }
 
+
     //the same profile cannot open more than 1 of the same type of account
     public boolean open(Account account) //add a new account
     {
+        if (contains(account))
+        {
+            return false;
+        }
         if (!contains(account))
         {
             if (this.accounts.length == 0) //array has initial capacity 0

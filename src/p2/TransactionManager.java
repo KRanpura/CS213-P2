@@ -76,17 +76,31 @@ public class TransactionManager
                     System.out.println("Invalid campus code.");
                     return;
                 }
+                else
+                {
+                    Campus campus = Campus.values()[Integer.parseInt(openBank[5])]; // Parse the campus code correctly
+                    CollegeChecking collegeChecking = new CollegeChecking(profile, balance, campus);
+                    //System.out.println(db.open(collegeChecking));
+                    boolean result = db.open(collegeChecking);
+                    if (result) {
+                        System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob() + "(" + accountType + ") opened.");
+                    } else {
+                        System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob() + "(" + accountType + ") is already in the database.");
+                    }
+                    return;
+                }
             }
             Account account = makeAccount(profile, balance, accountType);
             System.out.println(db.open(account));
-            if(db.open(account))
-            {
-              System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+ "("+accountType+") opened." );
-            }
-            else
-            {
-                System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+ "("+accountType+") is already in the database." );
-            }
+//            if(db.open(account))
+//            {
+//              System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+ "("+accountType+") opened." );
+//            }
+//            else if (!db.open(account))
+//            {
+//                System.out.println(db.open(account));
+//                System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob()+ "("+accountType+") is already in the database." );
+//            }
         }
         catch (NumberFormatException e)
         {

@@ -155,7 +155,7 @@ public abstract class Account implements Comparable<Account>
      */
     public String format(double balance)
     {
-        DecimalFormat decimalFormat = new DecimalFormat("#,##0.#0");
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
         return decimalFormat.format(balance);
     }
 }

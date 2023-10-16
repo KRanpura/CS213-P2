@@ -41,9 +41,10 @@ public class CollegeChecking extends Checking
     @Override
     public String toString()
     {
+        String campusString = (this.campus != null) ? this.getCampus().toString() : "N/A";
         return (this.getType() + "::" + this.getHolder().getFname() + " " +
                 this.getHolder().getLname() + " " + this.getHolder().getDob().toString() +
-                "::Balance: $" + format(this.getBalance()) + "::" + this.getCampus().toString());
+                "::Balance: $" + format(this.getBalance()) + "::" + campusString);
     }
 
     @Override
