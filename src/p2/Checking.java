@@ -7,55 +7,67 @@
 
 package p2;
 
-public class Checking extends Account
-{
+public class Checking extends Account {
     private static final double MONTHLY_FEE_IN_DOLLARS = 12;
     protected static final double ANNUAL_INTEREST_RATE = 0.010;
 
-    public Checking (Profile accHolder, double accBalance)
-    {
+    /**
+     * Constructor to make a new instance of the Checking account class.
+     * @param accHolder  account holder of new Checking account
+     * @param accBalance balance of new checking account
+     */
+    public Checking(Profile accHolder, double accBalance) {
         super(accHolder, accBalance);
     }
 
-    public double monthlyInterest()
-    {
+    /**
+     * Calculates the monthly interest for the checking account
+     * it is called on.
+     * @return interest amount as a double
+     */
+    public double monthlyInterest() {
         return (this.balance * (ANNUAL_INTEREST_RATE / MONTHS));
     }
 
-    public double monthlyFee()
-    {
-        if (this.getClass() == CollegeChecking.class || this.balance > 1000)
-        {
+    /**
+     * Calculates the monthly fees for the checking account
+     * it is called on.
+     * @return fee amount as a double
+     */
+    public double monthlyFee() {
+        if (this.getClass() == CollegeChecking.class || this.balance > 1000) {
             return 0.0;
-        }
-        else
-        {
+        } else {
             return MONTHLY_FEE_IN_DOLLARS;
         }
     }
 
-    public String getType()
-    {
+    /**
+     * Helper method that returns the type of the account as a String for printing purposes.
+     * @return type as a String
+     */
+    public String getType() {
         return "Checking";
     }
 
-    public String getTypeInitial() { return "C";}
+    /**
+     * Helper method that returns the initials of the type of the account as a String
+     * for printing purposes.
+     * @return type initial as a string
+     */
+    public String getTypeInitial() {
+        return "C";
+    }
 
+    /**
+     * toString method to format the account for printing.
+     * @return formatted account String
+     */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return (this.getType() + "::" + this.getHolder().getFname() + " " +
                 this.getHolder().getLname() + " " + this.getHolder().getDob().toString() + " " +
                 "::Balance: $" + format(this.getBalance()));
     }
 
-//    @Override
-//    public int compareTo(Account account) {
-//        return super.compareTo(account);
-//    }
-//
-//    @Override
-//    public boolean equals(Object obj) {
-//        return super.equals(obj);
-//    }
 }

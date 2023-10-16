@@ -4,7 +4,6 @@
  * account information.
  * @author Khushi Ranpura
  */
-
 package p2;
 
 public class Savings extends Account
@@ -16,11 +15,24 @@ public class Savings extends Account
     private static final double ANNUAL_INTEREST_RATE = 0.04;
 
 
+    /**
+     * Constructor to create a new instance of the Savings account class and
+     * initialize its instance variables.
+     * @param accHolder account holder
+     * @param balance balance of new account
+     * @param loyalStatus loyalty status of new account
+     */
     public Savings(Profile accHolder, double balance, boolean loyalStatus)
     {
         super(accHolder, balance);
         this.isLoyal = loyalStatus;
     }
+
+    /**
+     * Calculates the monthly interest for the savings account
+     * it is called on.
+     * @return interest amount as a double
+     */
     public double monthlyInterest()
     {
         if (this.isLoyal)
@@ -30,7 +42,11 @@ public class Savings extends Account
         return (this.balance * (ANNUAL_INTEREST_RATE / MONTHS)); //placeholder
     }
 
-    //return monthly fee
+    /**
+     * Calculates the monthly fees for the savings account
+     * it is called on.
+     * @return fee amount as a double
+     */
     public double monthlyFee()
     {
         if (this.getClass() == MoneyMarket.class)
@@ -58,22 +74,46 @@ public class Savings extends Account
 
     }
 
+    /**
+     * Helper method that returns the type of the account as a String for printing purposes.
+     * @return type as a String
+     */
     public String getType()
     {
         return "Savings";
     }
 
+    /**
+     * Helper method that returns the initials of the type of the account as a String
+     * for printing purposes.
+     * @return type initial as a string
+     */
     public String getTypeInitial() { return "MM";}
+
+    /**
+     * Getter method to get loyalty status of the savings account
+     * it is called on.
+     * @return loyalty status
+     */
     public boolean getLoyal()
     {
         return this.isLoyal;
     }
 
+    /**
+     * Setter method to update loyalty status of the savings account it
+     * is called on.
+     * @param status new loyalty status
+     */
     public void setLoyal(boolean status)
     {
         this.isLoyal = status;
     }
 
+    /**
+     * Helper method to return loyalty status of the account as a string
+     * @return is loyal if loyal, or ""
+     */
     protected String getLoyalString()
     {
         if (this.isLoyal)
@@ -85,6 +125,11 @@ public class Savings extends Account
             return "";
         }
     }
+
+    /**
+     * toString method to format the account for printing.
+     * @return formatted account String
+     */
     @Override
     public String toString()
     {
@@ -93,12 +138,4 @@ public class Savings extends Account
                 "::Balance: $" + format(this.getBalance()) + "::" + this.getLoyalString());
     }
 
-//    @Override
-//    public int compareTo(Account account) {
-//        return super.compareTo(account);
-//    }
-//    @Override
-//    public boolean equals(Object obj) {
-//        return super.equals(obj);
-//    }
 }
