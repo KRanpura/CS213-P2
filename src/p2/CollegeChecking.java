@@ -4,40 +4,73 @@
  * account information.
  * @author Khushi Ranpura
  */
-
-
 package p2;
 
 public class CollegeChecking extends Checking
 {
     private Campus campus; //campus code
 
+    /**
+     * Constructor to create a new instance of the CollegeChecking account class.
+     * @param accHolder account holder
+     * @param accBalance balance of new account
+     * @param campus campus associated with new account
+     */
     public CollegeChecking(Profile accHolder, double accBalance, Campus campus)
     {
         super(accHolder, accBalance);
         this.campus = campus;
     }
+
+    /**
+     * Calculates the monthly interest for the college checking account
+     * it is called on.
+     * @return interest amount as a double
+     */
     public double monthlyInterest()
     {
         return super.monthlyInterest();
     }
+
+    /**
+     * Calculates the monthly fees for the college checking account
+     * it is called on.
+     * @return fee amount as a double
+     */
     public double monthlyFee()
     {
         return super.monthlyFee();
     }
 
+    /**
+     * Getter method to access the campus attribute of the College Checking account.
+     * @return campus
+     */
     public Campus getCampus()
     {
         return this.campus; //campus is an enum constant
     }
 
+    /**
+     * Helper method that returns the type of the account as a String for printing purposes.
+     * @return type as a String
+     */
     public String getType()
     {
         return "College Checking";
     }
 
+    /**
+     * Helper method that returns the initials of the type of the account as a String
+     * for printing purposes.
+     * @return type initial as a string
+     */
     public String getTypeInitial() { return "CC";}
 
+    /**
+     * toString method to format the account for printing.
+     * @return formatted account String
+     */
     @Override
     public String toString()
     {
@@ -47,14 +80,5 @@ public class CollegeChecking extends Checking
                 "::Balance: $" + format(this.getBalance()) + "::" + campusString);
     }
 
-//    @Override
-//    public int compareTo(Account account) {
-//        return super.compareTo(account);
-//    }
-//
-//    @Override
-//    public boolean equals(Object obj) {
-//        return super.equals(obj);
-//    }
 }
 
