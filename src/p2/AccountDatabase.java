@@ -18,11 +18,21 @@ public class AccountDatabase
 
     private static final int MM_MIN_BALANCE = 2000;
 
+    /**
+     * Constructor to create a new instance of an AccountDatabase and
+     * initialize its instance variables.
+     */
     public AccountDatabase()
     {
         this.numAcct = 0;
         this.accounts = new Account[0];
     }
+
+    /**
+     * Finds an account in the database
+     * @param account account to find
+     * @return index if account found, or NOT_FOUND if not found
+     */
     private int find(Account account) //search for an account in the array
     {
         if(this.accounts.length == 0)
@@ -46,6 +56,9 @@ public class AccountDatabase
         return NOT_FOUND;
     }
 
+    /**
+     * Grows the database when it is full.
+     */
     private void grow() //increase the capacity by 4
     {
         Account[] newArray = new Account[this.accounts.length+4];
@@ -56,6 +69,11 @@ public class AccountDatabase
         this.accounts = newArray;
     }
 
+    /**
+     * Checks if the database contains an account by calling the find method.
+     * @param account to check for
+     * @return true if account is in database, or false if it is not in the database
+     */
     public boolean contains(Account account) //overload if necessary
     {
         if (find(account) != NOT_FOUND)
@@ -69,7 +87,11 @@ public class AccountDatabase
     }
 
 
-    //the same profile cannot open more than 1 of the same type of account
+    /**
+     * Opens a new account and adds it to the database.
+     * @param account to add
+     * @return true if successfully added, else false
+     */
     public boolean open(Account account) //add a new account
     {
         for (int i = 0; i < this.accounts.length; i++) {
@@ -103,6 +125,12 @@ public class AccountDatabase
         }
         return false;
     }
+
+    /**
+     * Closes an account by removing it from the database.
+     * @param account to be closed
+     * @return true if successfully closed, else false
+     */
     public boolean close(Account account) //remove the given account
     {
         int index = find(account);
@@ -124,6 +152,12 @@ public class AccountDatabase
             return true;
         }
     }
+
+    /**
+     * Withdraws money from account if there are sufficient funds
+     * @param account to withdraw money from
+     * @return true if withdrawal is successful, else false
+     */
     public boolean withdraw(Account account) //false if insufficient fund
     {
         int accIndex = find(account);
@@ -155,6 +189,11 @@ public class AccountDatabase
         }
         return true;
     }
+
+    /**
+     * Deposits money in an account
+     * @param account to deposit money in
+     */
     public void deposit(Account account)
     {
         int accIndex = find(account);
@@ -174,6 +213,10 @@ public class AccountDatabase
             this.accounts[accIndex] = mmAccount;
         }
     }
+
+    /**
+     * Prints all accounts in the account database grouped by account type
+     */
     public void printSorted() //sort by account type and profile
     {
         if (this.accounts.length == 0)
@@ -189,6 +232,10 @@ public class AccountDatabase
         }
     }
 
+    /**
+     * Prints all accounts in the account database grouped by account type
+     * along with associated fees and interests to be applied.
+     */
     public void printFeesAndInterests() //calculate interests/fees
     {
         if (this.accounts.length == 0)
@@ -207,6 +254,10 @@ public class AccountDatabase
         }
     }
 
+    /**
+     * Prints all accounts in the account database grouped by account type
+     * along with all fees and interests applied
+     */
     public void printUpdatedBalances() //apply the interests/fees
     {
         if (this.accounts.length == 0)
@@ -225,6 +276,10 @@ public class AccountDatabase
         }
     }
 
+    /**
+     * Helper method to return all accounts in database sorted by type of account.
+     * @return nonNullAccounts array of sorted events
+     */
     public Account[] getSortedDatabase()
     {
         Account[] nonNullAccounts = new Account[numAcct];
