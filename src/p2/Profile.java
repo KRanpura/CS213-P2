@@ -102,7 +102,7 @@ public class Profile implements Comparable<Profile>
         {
             if (this.fname.equals(profile.getFname()))
             {
-                if (this.dob.equals(profile.getDob()))
+                if (this.dob.toString().equals(profile.getDob().toString()))
                 {
                     return SAME_PROFILE;
                 }
@@ -134,18 +134,14 @@ public class Profile implements Comparable<Profile>
         if (obj instanceof Profile)
         {
             Profile profile = (Profile) obj;
-            if (this.compareTo(profile) == SAME_PROFILE)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (this.compareTo(profile) == SAME_PROFILE);
         }
-        else
-        {
-            return false;
-        }
+        return false;
+    }
+
+    @Override
+    public String toString()
+    {
+        return (this.getFname() + " " + this.getLname() + " " + this.getDob().toString() + " ");
     }
 }

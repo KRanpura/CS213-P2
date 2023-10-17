@@ -41,15 +41,8 @@ public class AccountDatabase
         }
         for (int i = 0; i < this.accounts.length; i++)
         {
-            if(this.accounts[i] == null)
+            if (this.accounts[i] != null && this.accounts[i].equals(account))
             {
-                continue;
-            }
-            if (this.accounts[i].equals(account))
-            {
-//                System.out.println("account in array: " +this.accounts[i]);
-//                System.out.println("account: " +account);
-
                 return i;
             }
         }
@@ -76,14 +69,7 @@ public class AccountDatabase
      */
     public boolean contains(Account account) //overload if necessary
     {
-        if (find(account) != NOT_FOUND)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return (find(account) != NOT_FOUND);
     }
 
 
@@ -94,13 +80,8 @@ public class AccountDatabase
      */
     public boolean open(Account account) //add a new account
     {
-        for (int i = 0; i < this.accounts.length; i++) {
-            if (this.accounts[i] != null && this.accounts[i].equals(account)) {
-                return false; // An account with the same profile and type already exists.
-            }
-        }
         //System.out.println(account);
-        if (contains(account))
+        if (this.contains(account))
         {
             return false;
         }

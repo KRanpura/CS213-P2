@@ -85,7 +85,8 @@ public class TransactionManager
                 {
                     System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob() + "(" + accountType + ") opened.");
                 }
-                else{
+                else
+                {
                     System.out.println(profile.getFname() + " " + profile.getLname() + " " + profile.getDob() + "(" + accountType + ") is already in the database.");
                 }
                 return;
