@@ -25,17 +25,20 @@ public class AccountDatabase
     }
     private int find(Account account) //search for an account in the array
     {
-
+        if(this.accounts.length == 0)
+        {
+            return NOT_FOUND;
+        }
         for (int i = 0; i < this.accounts.length; i++)
         {
             if(this.accounts[i] == null)
             {
                 continue;
             }
-            if (this.accounts[i] != null || Objects.equals(this.accounts[i], account))
+            if (this.accounts[i].equals(account))
             {
-                System.out.println("account in array: " +this.accounts[i]);
-                System.out.println("account: " +account);
+//                System.out.println("account in array: " +this.accounts[i]);
+//                System.out.println("account: " +account);
 
                 return i;
             }
@@ -69,6 +72,11 @@ public class AccountDatabase
     //the same profile cannot open more than 1 of the same type of account
     public boolean open(Account account) //add a new account
     {
+        for (int i = 0; i < this.accounts.length; i++) {
+            if (this.accounts[i] != null && this.accounts[i].equals(account)) {
+                return false; // An account with the same profile and type already exists.
+            }
+        }
         //System.out.println(account);
         if (contains(account))
         {

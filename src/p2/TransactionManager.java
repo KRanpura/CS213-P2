@@ -82,6 +82,11 @@ public class TransactionManager
             }
             if(Objects.equals(accountType, "CC"))
             {
+                if (openBank.length != 6)
+                {
+                    System.out.println("Missing data for opening an account.");
+                    return;
+                }
                 if(Integer.parseInt(openBank[5])!=0 && Integer.parseInt(openBank[5])!=1 &&
                         Integer.parseInt(openBank[5])!=2)
                 {
